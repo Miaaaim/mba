@@ -7,8 +7,44 @@ import {
   LayoutGrid, List, ArrowRight, ChevronDown
 } from "lucide-react";
 
+const PROVINCE_LABELS = [
+  "北京", "天津", "上海", "重庆",
+  "河北", "山西", "辽宁", "吉林", "黑龙江",
+  "江苏", "浙江", "安徽", "福建", "江西", "山东",
+  "河南", "湖北", "湖南", "广东", "海南",
+  "四川", "贵州", "云南", "陕西", "甘肃", "青海",
+  "台湾", "内蒙古", "广西", "西藏", "宁夏", "新疆",
+  "香港", "澳门"
+];
+
+const CITY_TO_PROVINCE_MAP: Record<string, string> = {
+  杭州: "浙江",
+  台州: "浙江",
+  义乌: "浙江",
+  温州: "浙江",
+  金华: "浙江",
+  诸暨: "浙江",
+  湖州吴兴: "浙江",
+  宁波: "浙江",
+  绍兴: "浙江"
+};
+
 export const Classmates: React.FC = () => {
   const classmates = useMemo(() => generateClassmates(), []);
+
+  const getProvinceFromLocation = (location: string): string => {
+    const raw = (location || "").trim();
+    if (!raw) return "";
+
+    const direct = PROVINCE_LABELS.find((p) => raw.startsWith(p));
+    if (direct) return direct;
+
+    const normalized = raw.replace(/[省市区县\s]/g, "");
+    const inferred = CITY_TO_PROVINCE_MAP[normalized] || CITY_TO_PROVINCE_MAP[raw];
+    if (inferred) return inferred;
+
+    return raw;
+  };
   
   // Search state
   const [searchQuery, setSearchQuery] = useState("");
@@ -36,7 +72,7 @@ export const Classmates: React.FC = () => {
     const counts = {
       total: classmates.length,
       cities: new Set(classmates.map(c => c.currentCity)).size,
-      mbtis: new Set(classmates.map(c => c.MBTI)).size,
+      mbtis: new Set(classmates.map(c => c.MBTI).filter(m => !!(m && m.trim()))).size,
     };
     return counts;
   }, [classmates]);
@@ -53,9 +89,15 @@ export const Classmates: React.FC = () => {
     return list.sort((a, b) => a.localeCompare(b, "zh-CN"));
   }, [classmates]);
 
-  // List of all active hometowns for quick filter tabs
+  // List of all active hometown provinces for quick filter tabs
   const topHometowns = useMemo(() => {
-    const list = Array.from(new Set<string>(classmates.map(c => c.hometown).filter(h => !!(h && h.trim()))));
+    const list = Array.from(
+      new Set<string>(
+        classmates
+          .map(c => getProvinceFromLocation(c.hometown))
+          .filter(h => !!(h && h.trim()))
+      )
+    );
     return list.sort((a, b) => a.localeCompare(b, "zh-CN"));
   }, [classmates]);
 
@@ -66,11 +108,13 @@ export const Classmates: React.FC = () => {
       const nameMatch = c.name.toLowerCase().includes(searchQuery.toLowerCase());
       // Tag match
       const tagMatch = c.tagsText.toLowerCase().includes(searchQuery.toLowerCase());
+      // Hobbies match
+      const hobbyMatch = c.hobbies.toLowerCase().includes(searchQuery.toLowerCase());
       // Specialty or experience match
       const expMatch = c.experience.toLowerCase().includes(searchQuery.toLowerCase()) || 
                        c.canHelp.toLowerCase().includes(searchQuery.toLowerCase());
       
-      const queryMatch = nameMatch || tagMatch || expMatch;
+      const queryMatch = nameMatch || tagMatch || hobbyMatch || expMatch;
 
       // Filter MBTI
       let mbtiMatch = true;
@@ -86,7 +130,9 @@ export const Classmates: React.FC = () => {
       const cityMatch = selectedCity ? c.currentCity === selectedCity : true;
 
       // Filter hometown
-      const hometownMatch = selectedHometown ? c.hometown === selectedHometown : true;
+      const hometownMatch = selectedHometown
+        ? getProvinceFromLocation(c.hometown) === selectedHometown
+        : true;
 
       return queryMatch && mbtiMatch && cityMatch && hometownMatch;
     });
@@ -177,7 +223,7 @@ export const Classmates: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="搜索：输入同学姓名、擅长方向、MBTI性格（如INTJ）或标签..."
+              placeholder="搜索：姓名、兴趣爱好、擅长方向、MBTI（如INTJ）或标签..."
               className="w-full bg-white border-2 border-black rounded-xl pl-11 pr-4 py-3 font-sans text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-yellow-300 placeholder:text-gray-400"
             />
             {searchQuery && (
@@ -318,7 +364,7 @@ export const Classmates: React.FC = () => {
                     onClick={() => setIsHometownExpanded(!isHometownExpanded)}
                     className="self-start text-xs sm:text-sm font-extrabold text-blue-600 hover:text-blue-800 flex items-center gap-1 mt-0.5 transition-colors outline-none cursor-pointer"
                   >
-                    {isHometownExpanded ? "收起 ▲" : `展开更多 🏠 共有 ${topHometowns.length} 个家乡 ▼`}
+                    {isHometownExpanded ? "收起 ▲" : `展开更多 🏠 共有 ${topHometowns.length} 个省份 ▼`}
                   </button>
                 )}
               </div>
@@ -397,7 +443,7 @@ export const Classmates: React.FC = () => {
       ) : viewMode === "grid" ? (
         <>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-5 animate-in fade-in duration-300">
-            {filteredClassmates.slice(0, visibleCount).map((member, idx) => (
+            {filteredClassmates.slice(0, visibleCount).map((member) => (
               <div
                 key={member.id}
                 onClick={() => setSelectedClassmate(member)}
@@ -502,11 +548,11 @@ export const Classmates: React.FC = () => {
       ) : (
         /* List View */
         <div className="flex flex-col gap-3 animate-in fade-in duration-300">
-          {filteredClassmates.map((member, idx) => (
+          {filteredClassmates.map((member) => (
             <div
               key={member.id}
               onClick={() => setSelectedClassmate(member)}
-              className={`${member.bgColor} border-2 border-black rounded-xl px-4 py-2.5 cursor-pointer flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-[2.5px_2.5px_0_0_rgba(0,0,0,1)] hover:shadow-[4.5px_4.5px_0_0_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all select-none`}
+              className={`${member.bgColor} border-2 border-black rounded-xl px-4 py-2.5 pr-10 md:pr-4 cursor-pointer flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-[2.5px_2.5px_0_0_rgba(0,0,0,1)] hover:shadow-[4.5px_4.5px_0_0_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all select-none relative`}
             >
               <div className="flex items-center gap-3 w-full md:w-auto">
                 {/* Fallback emoji or mini photo */}
@@ -546,7 +592,7 @@ export const Classmates: React.FC = () => {
               </div>
 
               {/* Tag/Info Area in Row */}
-              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto md:flex-col md:items-start md:gap-1">
                 {/* member.className && member.className.trim() !== "" && (
                   <span className="font-sans text-xs text-emerald-800 font-black tracking-tight bg-white/70 border border-black/10 rounded-md px-1.5 py-0.5">
                     💡 {member.className}
@@ -565,10 +611,12 @@ export const Classmates: React.FC = () => {
               </div>
 
               {/* Action/Chevron */}
-              <div className="flex items-center gap-1.5 justify-end text-xs font-black text-blue-700 font-sans hover:underline shrink-0">
+              <div className="hidden md:flex items-center gap-1.5 justify-end text-xs font-black text-blue-700 font-sans hover:underline shrink-0">
                 <span>查看详情</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </div>
+
+              <ArrowRight className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 md:hidden" />
             </div>
           ))}
         </div>
