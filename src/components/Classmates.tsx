@@ -552,7 +552,7 @@ export const Classmates: React.FC = () => {
             <div
               key={member.id}
               onClick={() => setSelectedClassmate(member)}
-              className={`${member.bgColor} border-2 border-black rounded-xl px-4 py-2.5 pr-10 md:pr-4 cursor-pointer flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 shadow-[2.5px_2.5px_0_0_rgba(0,0,0,1)] hover:shadow-[4.5px_4.5px_0_0_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all select-none relative`}
+              className={`${member.bgColor} border-2 border-black rounded-xl px-4 py-2.5 pr-10 md:pr-4 cursor-pointer grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_140px_160px_auto] items-stretch md:items-center gap-3 md:gap-4 shadow-[2.5px_2.5px_0_0_rgba(0,0,0,1)] hover:shadow-[4.5px_4.5px_0_0_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all select-none relative`}
             >
               <div className="flex items-center gap-3 w-full md:w-auto">
                 {/* Fallback emoji or mini photo */}
@@ -591,13 +591,8 @@ export const Classmates: React.FC = () => {
                 </div>
               </div>
 
-              {/* Tag/Info Area in Row */}
-              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto md:flex-col md:items-start md:gap-1">
-                {/* member.className && member.className.trim() !== "" && (
-                  <span className="font-sans text-xs text-emerald-800 font-black tracking-tight bg-white/70 border border-black/10 rounded-md px-1.5 py-0.5">
-                    💡 {member.className}
-                  </span>
-                ) */}
+              {/* Mobile location badges */}
+              <div className="flex md:hidden flex-wrap items-center gap-2 w-full">
                 {member.currentCity && member.currentCity.trim() !== "" && (
                   <span className="font-sans text-xs text-gray-700 font-bold bg-white/50 border border-black/10 rounded-md px-1.5 py-0.5">
                     📍 {member.currentCity}
@@ -608,6 +603,19 @@ export const Classmates: React.FC = () => {
                     🏠 {member.hometown}
                   </span>
                 )}
+              </div>
+
+              {/* Desktop fixed columns for vertical alignment */}
+              <div className="hidden md:flex items-center">
+                <span className="w-full font-sans text-xs text-gray-700 font-bold bg-white/60 border border-black/10 rounded-md px-2 py-1 truncate">
+                  📍 {member.currentCity && member.currentCity.trim() !== "" ? member.currentCity : "-"}
+                </span>
+              </div>
+
+              <div className="hidden md:flex items-center">
+                <span className="w-full font-sans text-xs text-pink-700 font-black bg-white/60 border border-black/10 rounded-md px-2 py-1 truncate">
+                  🏠 {member.hometown && member.hometown.trim() !== "" ? member.hometown : "-"}
+                </span>
               </div>
 
               {/* Action/Chevron */}

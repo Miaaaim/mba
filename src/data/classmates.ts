@@ -777,6 +777,23 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🏃"
     },
     {
+      id: "user-061",
+      name: "郑傲楠",
+      className: "周末4班",
+      hometown: "新疆",
+      currentCity: "杭州",
+      contact: "18158137959",
+      hobbies: "户外运动、马拉松、钓鱼、篮球、户外野炊",
+      companyTitle: "杭州海康威视，户外产品营销&技术",
+      experience: "曾做IC红外芯片 To B 集成开发和项目经理，近年聚焦户外产品（钓鱼、热成像打猎）相关 To C 的营销与技术工作。",
+      canHelp: "可交流户外装备与场景化体验，包括钓鱼设备（打窝船、声呐等）和热成像设备应用。",
+      futureExpectation: "希望给更多户外爱好者带来体验和探索新乐趣，让小众走向大众。",
+      tagsText: "海康威视、户外产品、钓鱼装备、热成像",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🎣"
+    },
+    {
       id: "user-062",
       name: "朱泽炯",
       className: "四班",
