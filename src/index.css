@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300..900;1,300..900&family=Space+Grotesk:wght@300..700&family=Caveat:wght@700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Grotesk", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* Custom CSS animations and styles for Brutalist/Comic tactile drawing */
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 16s linear infinite;
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  animation: marquee 24s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Handdrawn wiggle effect for specific icons */
+@keyframes cute-wiggle {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.animate-wiggle {
+  animation: cute-wiggle 1.2s ease-in-out infinite;
+}
+
+.animate-wiggle-slow {
+  animation: cute-wiggle 3.5s ease-in-out infinite;
+}
+
+/* Dash line sweep for cyber SVG chart */
+@keyframes dash {
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.animate-dash {
+  stroke-dasharray: 20;
+  stroke-dashoffset: 200;
+  animation: dash 40s linear infinite;
+}
+
+/* Styling offsets for responsive containers */
+body {
+  background-color: #FAF8F0;
+  color: #111111;
+  overflow-x: hidden;
+}
+
+/* Mobile typography baseline for Chinese readability */
+@media (max-width: 768px) {
+  html {
+    font-size: 17px;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    line-height: 1.65;
+  }
+
+  /* Lift small utility text sizes to avoid sub-readable Chinese text on mobile */
+  .text-xs {
+    font-size: 0.8125rem;
+    line-height: 1.45;
+  }
+
+  .text-sm {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+  }
+}
+
+/* Scrollbar hiding utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Scrollbar customization matching neat retro slate */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FCFBF4;
+  border-left: 3px solid #111111;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #FADC4F;
+  border: 3px solid #111111;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE2F2;
+}
