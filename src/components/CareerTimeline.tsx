@@ -10,7 +10,6 @@ import {
   ExternalLink,
   Paperclip,
   Bookmark,
-  Sparkles,
   Smile,
   Gift
 } from "lucide-react";
@@ -180,7 +179,7 @@ export const CareerTimeline: React.FC = () => {
           </span>
         </h2>
         <p className="font-sans text-sm md:text-base text-gray-500 font-bold mt-2.5 max-w-xl mx-auto leading-relaxed">
-          移动端可左右滑动下方导师页签，探索班主任、优秀学长学姐的详细档案、经验成就、帮扶方向与共创链接。
+          感谢每一位提供帮助的浙大人，包括但不限于班主任、学长/学姐、老师
         </p>
       </div>
 
@@ -232,10 +231,6 @@ export const CareerTimeline: React.FC = () => {
               左右滑动切换导师档案
             </div>
 
-            <div className="p-4 bg-amber-50/50 border-2 border-dashed border-amber-300 rounded-2xl text-center font-sans text-xs font-bold text-amber-700 select-none">
-              <Sparkles className="w-4 h-4 mb-1.5 mx-auto text-amber-500 animate-pulse" />
-              💡 更多授课老师正在规划录入中...
-            </div>
           </div>
 
           {/* Active Folder Dossier Whiteboard Sheet is styled to mimic graph card paper */}
