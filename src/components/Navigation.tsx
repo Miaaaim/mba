@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { HandwrittenDoodle } from "./HandwrittenDoodle";
 
 interface NavigationProps {
@@ -7,6 +7,33 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
   const [activeSection, setActiveSection] = useState<string>("hero");
+  const sectionIds = ["hero", "classmates", "career", "milestones", "testimonials"];
+
+  useEffect(() => {
+    const updateActiveSectionFromScroll = () => {
+      const anchorY = window.scrollY + window.innerHeight * 0.35;
+      let currentSection = sectionIds[0];
+
+      for (const sectionId of sectionIds) {
+        const el = document.getElementById(sectionId);
+        if (!el) continue;
+        if (el.offsetTop <= anchorY) {
+          currentSection = sectionId;
+        }
+      }
+
+      setActiveSection((prev) => (prev === currentSection ? prev : currentSection));
+    };
+
+    updateActiveSectionFromScroll();
+    window.addEventListener("scroll", updateActiveSectionFromScroll, { passive: true });
+    window.addEventListener("resize", updateActiveSectionFromScroll);
+
+    return () => {
+      window.removeEventListener("scroll", updateActiveSectionFromScroll);
+      window.removeEventListener("resize", updateActiveSectionFromScroll);
+    };
+  }, []);
 
   const handleNavClick = (sectionId: string) => {
     setActiveSection(sectionId);
@@ -43,7 +70,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
                 : "text-gray-800 hover:bg-yellow-100"
             }`}
           >
-            周末4班 //
+            周末4班 🎓
           </button>
 
           <button

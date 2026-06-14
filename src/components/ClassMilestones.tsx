@@ -123,8 +123,8 @@ export const ClassMilestones: React.FC = () => {
             <span className="absolute left-0 bottom-1 w-full h-2.5 bg-indigo-100 -z-10 rounded-full" />
           </span>
         </h2>
-        <p className="font-sans text-sm md:text-base text-gray-400 font-bold mt-2.5 max-w-xl mx-auto leading-relaxed">
-          时间记叙了我们从素不相识到顶峰相见的每一次心跳。拉动或点击按钮，横向探索全班共同经历的时光轴（持续记录中）。
+        <p className="font-sans text-sm md:text-base text-gray-500 font-bold mt-2.5 max-w-xl mx-auto leading-relaxed">
+          记录每一次共同经历，让时间给出答案
         </p>
       </div>
 
@@ -139,7 +139,7 @@ export const ClassMilestones: React.FC = () => {
               <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-600"></span>
             </span>
             <span className="font-mono text-sm font-black tracking-widest text-black uppercase">
-              Chronological Track : {milestones.length} Events Recorded
+                {milestones.length} 个里程碑
             </span>
           </div>
 
@@ -175,10 +175,10 @@ export const ClassMilestones: React.FC = () => {
             style={{ WebkitOverflowScrolling: "touch" }}
           >
             {/* Start of timeline interactive placeholders: Upcoming future milestone card */}
-            <div className="w-[200px] shrink-0 self-stretch flex flex-col justify-center items-center p-6 bg-white/40 border-3 border-dashed border-black/30 rounded-2xl text-center select-none rotate-1">
+            <div className="w-[170px] sm:w-[200px] shrink-0 self-stretch flex flex-col justify-center items-center p-4 sm:p-6 bg-white/40 border-3 border-dashed border-black/30 rounded-2xl text-center select-none rotate-1">
               <span className="text-2xl mb-1 filter drop-shadow">🔥</span>
               <span className="block font-sans font-black text-sm text-gray-700">下一站：金秋开学</span>
-              <span className="block font-mono text-xs text-gray-400 font-bold mt-1">COMING SOON...</span>
+              <span className="block font-mono text-xs text-gray-400 font-bold mt-1">敬请期待...</span>
             </div>
 
             {milestones.map((ms, idx) => {
@@ -228,7 +228,7 @@ export const ClassMilestones: React.FC = () => {
                     </p>
 
                     <div className="mt-4 pt-2 border-t border-dashed border-gray-100 flex items-center justify-between text-xs font-mono text-gray-400 font-bold">
-                      <span>MEMORIES #{milestones.length - idx}</span>
+                      <span>成长印记 #{milestones.length - idx}</span>
                       <Sparkles className="w-3.5 h-3.5 opacity-50" />
                     </div>
 

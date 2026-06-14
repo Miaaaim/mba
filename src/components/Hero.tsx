@@ -24,7 +24,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
             
             {/* Polaroid frame inside */}
-            <div className="w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] flex flex-col items-center justify-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
 
             {/* Polaroid frame inside */}
-            <div className="w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCF9E8] flex flex-col items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
@@ -101,7 +101,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
 
             {/* Polaroid frame inside */}
-            <div className="w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-1deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-1deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] flex flex-col items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
@@ -133,7 +133,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
     <section id="hero" className="w-full max-w-7xl mx-auto px-4 py-8 md:py-16 relative">
       
       {/* Absolute Decorative Floating Doodles on the background canvas */}
-      <div className="absolute top-2 left-6 md:left-20 pointer-events-none select-none">
+      <div className="absolute top-8 md:top-12 left-6 md:left-20 pointer-events-none select-none">
         <HandwrittenDoodle type="star-pink" className="w-10 h-10 md:w-16 md:h-16 animate-bounce" />
       </div>
       <div className="absolute bottom-6 left-12 md:left-32 pointer-events-none select-none hidden md:block">
