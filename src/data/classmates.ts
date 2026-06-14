@@ -26,6 +26,23 @@ const BG_COLORS = [
   "bg-[#D3F4FF]"  // Soft cyan
 ];
 
+const MBTI_TYPES = [
+  "INTJ", "INTP", "ENTJ", "ENTP",
+  "INFJ", "INFP", "ENFJ", "ENFP",
+  "ISTJ", "ISFJ", "ESTJ", "ESFJ",
+  "ISTP", "ISFP", "ESTP", "ESFP"
+];
+
+function extractMBTIFromText(text: string): string {
+  if (!text) return "";
+
+  const matched = text
+    .toUpperCase()
+    .match(/(?:^|[^A-Z])(INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP)(?=$|[^A-Z])/);
+
+  return matched?.[1] ?? "";
+}
+
 export function generateClassmates(): Classmate[] {
   const rawList: Omit<Classmate, "bgColor">[] = [
     {
@@ -41,8 +58,8 @@ export function generateClassmates(): Classmate[] {
       canHelp: "或许有同学需要多肽/寡核苷酸CDMO服务吗？",
       futureExpectation: "保持探索",
       tagsText: "实验室搬砖人、INTP（EJ横跳）",
-      MBTI: "INTP",
-      photo: "",
+      MBTI: "",
+      photo: "contact-photos/user_001.jpg",
       fallbackEmoji: "🧪"
     },
     {
@@ -58,7 +75,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "考公、农文旅",
       futureExpectation: "顺利毕业",
       tagsText: "INFP",
-      MBTI: "INFP",
+      MBTI: "",
       photo: "contact-photos/user_002.jpg",
       fallbackEmoji: "🏎️"
     },
@@ -75,7 +92,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "厨房小家电选品专业咨询，实战十亿爆品创新信息、方法论交流",
       futureExpectation: "引领小家电智能创新，打造百亿爆品",
       tagsText: "修行，体验，创新，自定义",
-      MBTI: "ENFJ",
+      MBTI: "",
       photo: "contact-photos/user_003.jpg",
       fallbackEmoji: "🍳"
     },
@@ -92,7 +109,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "财税和不良资产评估相关咨询",
       futureExpectation: "以梦为马，共赴星海",
       tagsText: "废话文学生产标兵、热搜延迟吃瓜群众",
-      MBTI: "ESTP",
+      MBTI: "",
       photo: "contact-photos/user_005.jpg",
       fallbackEmoji: "🏀"
     },
@@ -109,7 +126,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "愿意为大家牵线搭桥物产系相关公司、企业套期保值领域有丰富的经验、期货知识普及",
       futureExpectation: "求知、结伴、共赢！",
       tagsText: "物产中大人、篮球爱好者、外冷内热",
-      MBTI: "ISTJ",
+      MBTI: "",
       photo: "contact-photos/user_007.jpg",
       fallbackEmoji: "📈"
     },
@@ -126,7 +143,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "国有资产相关资讯",
       futureExpectation: "自我提升",
       tagsText: "INFP，慢热，幽默感",
-      MBTI: "INFP",
+      MBTI: "",
       photo: "contact-photos/user_008.jpg",
       fallbackEmoji: "🎮"
     },
@@ -143,7 +160,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "投融资、创新产品及首台套申报",
       futureExpectation: "学习创新创业思维，与各位老师 and / & 同学多多交流学习",
       tagsText: "ISTJ 开荒型选手",
-      MBTI: "ISTJ",
+      MBTI: "",
       photo: "contact-photos/user_009.jpg",
       fallbackEmoji: "🧘"
     },
@@ -160,7 +177,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "AI基础设施相关产品 and / & 方案",
       futureExpectation: "运动、读书和搞钱，希望遇到志趣相投的朋友。",
       tagsText: "白羊座&INTJ 高级工程师/E类人才/香港高才",
-      MBTI: "INTJ",
+      MBTI: "",
       photo: "contact-photos/user_010.jpg",
       fallbackEmoji: "🎾"
     },
@@ -177,7 +194,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "财会税务、内控合规、港股IPO交流",
       futureExpectation: "破界、交流、精进、蜕变",
       tagsText: "INTJ、外冷内热、选择困难症",
-      MBTI: "INTJ",
+      MBTI: "",
       photo: "contact-photos/user_011.jpg",
       fallbackEmoji: "🏓"
     },
@@ -194,7 +211,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "国际航空物流/通用航空相关、高品质沉香收藏",
       futureExpectation: "和好玩的人一起做好玩的事",
       tagsText: "ISTJ，向往社交但不善言辞，买单别跟我抢，学军校友滴滴",
-      MBTI: "ISTJ",
+      MBTI: "",
       photo: "",
       fallbackEmoji: "✈️"
     },
@@ -211,7 +228,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "分享行业经历，给相关医药领域推广提供市场经验",
       futureExpectation: "希望和更多伙伴一起探寻医药行业新方向，顺应新环境，一起搞钱",
       tagsText: "ENFP快乐小狗/家有小猫",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_013.jpg",
       fallbackEmoji: "🐶"
     },
@@ -228,7 +245,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "医疗IVD检验领域（生化、免疫、POCT、仪器以及实验室自动化）",
       futureExpectation: "企业运营管理，探索医疗新方向，认识跨领域朋友，顺利毕业",
       tagsText: "药学跳到检验，喜欢自驾vs时间不够",
-      MBTI: "INTP",
+      MBTI: "",
       photo: "contact-photos/user_015.jpg",
       fallbackEmoji: "🏥"
     },
@@ -245,7 +262,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "北美海外市场开拓、团队管理相关经验分享，也可对接家居行业上下游资源。英语口语陪练。",
       futureExpectation: "学以致用 成长蜕变 持续学习 努力搞钱",
       tagsText: "ISFJ（努力变E中），狮子座，咖啡续命，外贸-定期不定期出差，向前一步，Don’t settle",
-      MBTI: "ISFJ",
+      MBTI: "",
       photo: "contact-photos/user_016.jpg",
       fallbackEmoji: "🦁"
     },
@@ -262,7 +279,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "金融，财会，税务，法律相关知识",
       futureExpectation: "顺利毕业",
       tagsText: "注册会计师，税务师，经济师",
-      MBTI: "ISTJ",
+      MBTI: "",
       photo: "contact-photos/user_018.jpg",
       fallbackEmoji: "📖"
     },
@@ -279,7 +296,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "智慧交通及人力资源领域资源互通",
       futureExpectation: "不断进步",
       tagsText: "INFJ 80%的i但会为i做e/需要计划但不一定执行",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "contact-photos/user_020.jpg",
       fallbackEmoji: "🧗"
     },
@@ -296,7 +313,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "金融老兵，产业链接、产业基金国资投资相关咨询",
       futureExpectation: "求是创新",
       tagsText: "ESTJ/金牛座",
-      MBTI: "ESTJ",
+      MBTI: "",
       photo: "contact-photos/user_021.jpg",
       fallbackEmoji: "⛺"
     },
@@ -313,7 +330,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "消费品板块资源对接",
       futureExpectation: "希望对一切保持好奇与热情",
       tagsText: "土澳留子/“小蝴蝶”/真的大写I人",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "contact-photos/user_022.jpg",
       fallbackEmoji: "🦋"
     },
@@ -330,7 +347,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "财务咨询、产投探讨",
       futureExpectation: "提升自己+认识更多小伙伴",
       tagsText: "ENFP、狮子座、猫鱼双全、遇E则I，遇I则E",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_024.jpg",
       fallbackEmoji: "🍵"
     },
@@ -347,7 +364,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "企业参访/丝绸文化/文创礼品",
       futureExpectation: "不挂科、不延毕",
       tagsText: "ISFJ",
-      MBTI: "ISFJ",
+      MBTI: "",
       photo: "contact-photos/user_025.jpg",
       fallbackEmoji: "🧣"
     },
@@ -364,7 +381,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "有想了解人事或者考公相关的一些政策的可以解答",
       futureExpectation: "不挂科，一起顺利毕业",
       tagsText: "ISFP，一般不喜欢拍照，所以没有靓照😂",
-      MBTI: "ISFP",
+      MBTI: "",
       photo: "",
       fallbackEmoji: "🏸"
     },
@@ -381,7 +398,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "教育行业的用户洞察，数学建模/数据分析，传统酒业的实际资源（男友家族企业制酒业）",
       futureExpectation: "正跨界探索传统酒业转型，渴望向制造业、消费品、数字化领域的校友请教。期待碰撞思想，更期待结下友谊！",
       tagsText: "00后教育管理新秀，跨界转型探索者，天秤本秤，待人皆温柔",
-      MBTI: "INFP",
+      MBTI: "",
       photo: "contact-photos/user_028.jpg",
       fallbackEmoji: "📐"
     },
@@ -398,7 +415,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "浙江能源电力行业资源",
       futureExpectation: "学以致用、职业进阶、事业突破",
       tagsText: "ENFP、创业一年",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_029.jpg",
       fallbackEmoji: "⚡"
     },
@@ -415,7 +432,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "民商事法律相关问题均可咨询，能源类项目前期可交流。",
       futureExpectation: "认识各行各业优秀人才，共同进步，顺利毕业。",
       tagsText: "ENFP偏I但话多",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "",
       fallbackEmoji: "⚖️"
     },
@@ -432,7 +449,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "高校资源；美食地图",
       futureExpectation: "好好学习 天天向上",
       tagsText: "运动菜鸟、美食雷达",
-      MBTI: "ESTP",
+      MBTI: "",
       photo: "contact-photos/user_031.jpg",
       fallbackEmoji: "🍚"
     },
@@ -449,7 +466,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "消费电子行业资源、传媒行业资源对接与经验分享",
       futureExpectation: "珍惜校园求学时光，提升管理认知，和同窗们交流共进，奔赴各自职业理想。",
       tagsText: "INFJ可切换E、我的风格是没有固定风格、风一样的水瓶座",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "contact-photos/user_033.jpg",
       fallbackEmoji: "📱"
     },
@@ -466,7 +483,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "定制化组织诊断，组织人才发展方案",
       futureExpectation: "一起认识有趣的搭子，探索新赛道",
       tagsText: "ISTJ/ENFP顺畅切换；自由灵魂；体验人生",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_034.jpg",
       fallbackEmoji: "🏃‍♀️"
     },
@@ -483,7 +500,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "大数据与Ai落地的产业实践，全国公安资源",
       futureExpectation: "炒股养家",
       tagsText: "东北人，话多，嗑瓜子贼快。",
-      MBTI: "ENTP",
+      MBTI: "",
       photo: "contact-photos/user_035.png",
       fallbackEmoji: "🧠"
     },
@@ -500,7 +517,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "熟悉银行对公业务、企业融资、综合金融方案规划，欢迎随时交流；家族从事家具行业多年，有工厂、货源、定制、软装全屋配套等资源。",
       futureExpectation: "努力成为更好的自己。",
       tagsText: "ENFP/高精力人群",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_036.jpg",
       fallbackEmoji: "🏦"
     },
@@ -517,7 +534,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "省院士中心产学研业务相关，科技行业动态，联络科技人才等；家里做高多层线路板，广东江西有厂，有需要欢迎交流协作",
       futureExpectation: "认真学习圆满毕业，跟同学们取取经",
       tagsText: "杭州土著、美国留子、家有爱猫、乐子人",
-      MBTI: "INFP",
+      MBTI: "",
       photo: "contact-photos/user_037.jpg",
       fallbackEmoji: "🐱"
     },
@@ -534,7 +551,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "宣传文化落地/活动策划与执行，以及气氛担当",
       futureExpectation: "结识各行各业有趣的人，突破自我局限，做一点有意义的事。",
       tagsText: "非典型银行人/海拉鲁gai溜子",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_038.jpg",
       fallbackEmoji: "📸"
     },
@@ -551,7 +568,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "外企头部自动化相关渠道",
       futureExpectation: "结识金融、财务、数字化、AI等领域小伙伴",
       tagsText: "灵活办公的出差选手",
-      MBTI: "ENTJ",
+      MBTI: "",
       photo: "contact-photos/user_039.jpg",
       fallbackEmoji: "⚙️"
     },
@@ -568,7 +585,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "企业、个人投融资业务，综合金融方案制定",
       futureExpectation: "终身学习，成为更好的自己",
       tagsText: "白羊座",
-      MBTI: "ESTJ",
+      MBTI: "",
       photo: "contact-photos/user_040.png",
       fallbackEmoji: "🐏"
     },
@@ -585,7 +602,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "电商、营销相关都可深入探讨",
       futureExpectation: "和同学们优势互补，合伙共创",
       tagsText: "年龄与心态完全不符的“老年人”",
-      MBTI: "ENTJ",
+      MBTI: "",
       photo: "contact-photos/user_044.png",
       fallbackEmoji: "🎣"
     },
@@ -602,7 +619,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "政企项目资源、家电产销渠道",
       futureExpectation: "期待认识各行各业的伙伴，未来一起学习成长、互帮互助、可以多碰撞出一些火花",
       tagsText: "海外留子| 科创数智 | ENFP or ENFJ",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_045.png",
       fallbackEmoji: "🎥"
     },
@@ -619,7 +636,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "浙江铁路系统、传统媒体系统",
       futureExpectation: "实现人生“五个一”工程",
       tagsText: "雪茄客、浙江铁路人、品牌传播操盘手、美国访问学者、摄影爱好者",
-      MBTI: "ENFJ",
+      MBTI: "",
       photo: "contact-photos/user_047.jpg",
       fallbackEmoji: "🚂"
     },
@@ -636,7 +653,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "省商务厅或省外贸体制流程引荐协作",
       futureExpectation: "希望能结交各行各业小伙伴，交流工作经验，组队打卡演唱会，拓展有趣人脉",
       tagsText: "ENFP",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_048.jpg",
       fallbackEmoji: "🗺️"
     },
@@ -653,7 +670,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "大宗商品专业仓储物流服务资源、数字化转型经验；党支部联建共建；物产中大旗下公司合作引荐",
       futureExpectation: "凝心聚力、携手共进，成为最好的我们、更好的自己",
       tagsText: "物产中大人、物流人、INFJ",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "contact-photos/user_049.png",
       fallbackEmoji: "📦"
     },
@@ -670,7 +687,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "舞台科技、演艺声光电控制、机械制造方案对接推广",
       futureExpectation: "文旅舞台创意设计，连接AR/VR多媒体等",
       tagsText: "大丰演艺人、舞台科技专家",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "",
       fallbackEmoji: "🎭"
     },
@@ -687,7 +704,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "设备运营管理心得、基层团队建设",
       futureExpectation: "终身成长、推动企业智能化发展",
       tagsText: "INFJ、终身学习者、运动&音乐爱好者",
-      MBTI: "INFJ",
+      MBTI: "",
       photo: "contact-photos/user_053.jpg",
       fallbackEmoji: "🧹"
     },
@@ -704,7 +721,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "文艺演出资源 各地旅游攻略",
       futureExpectation: "对接更大平台 施展更大能量",
       tagsText: "公益组织服务者 / 持续减肥党 / 40+ 宝妈",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "",
       fallbackEmoji: "🎤"
     },
@@ -721,7 +738,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "用AI做个人应用",
       futureExpectation: "探索人生更多的可能性，倾听大家独一无二的故事；根据场合在IE、SN、FT、PJ之间自由切换",
       tagsText: "猫奴",
-      MBTI: "ENTP",
+      MBTI: "",
       photo: "contact-photos/user_055.jpg",
       fallbackEmoji: "🐱"
     },
@@ -738,7 +755,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "高校资源、大学生资源、各种培训",
       futureExpectation: "完善自己的项目、加入更多不同的项目，有创业的咱们都可以加一下",
       tagsText: "创业、运动、自媒体IP",
-      MBTI: "ENTP",
+      MBTI: "",
       photo: "contact-photos/user_056.jpg",
       fallbackEmoji: "🏸"
     },
@@ -755,7 +772,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "国企合规/项目协调/美食探店分享",
       futureExpectation: "学然后知，行然后远",
       tagsText: "ENTP/吸引力法则",
-      MBTI: "ENTP",
+      MBTI: "",
       photo: "contact-photos/user_057.jpg",
       fallbackEmoji: "🐱"
     },
@@ -772,7 +789,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "大宗贸易业务模式、合规交流；医疗健康行业探讨交流",
       futureExpectation: "跳出自己的圈子认识志同道合的朋友；顺利毕业",
       tagsText: "国企大宗贸易/医疗健康/加拿大留子/奶爸/运动爱好者",
-      MBTI: "ESTJ",
+      MBTI: "",
       photo: "contact-photos/user_058.jpg",
       fallbackEmoji: "🏃"
     },
@@ -790,7 +807,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "希望给更多户外爱好者带来体验和探索新乐趣，让小众走向大众。",
       tagsText: "海康威视、户外产品、钓鱼装备、热成像",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_061.jpg",
       fallbackEmoji: "🎣"
     },
     {
@@ -806,7 +823,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "提供全域人力咨询以及对于整车行业链接",
       futureExpectation: "一起学习，一起成长，遇见更好的自己",
       tagsText: "INTJ 常年徘徊于E与I 喜爱钓鱼但常年空军",
-      MBTI: "INTJ",
+      MBTI: "",
       photo: "contact-photos/user_062.png",
       fallbackEmoji: "🎣"
     },
@@ -823,7 +840,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "AIGC广告内容创作(含平面设计、动画制作、视频剪辑、建模等）、海外广告渠道资源、多语言本地化支持。",
       futureExpectation: "探索人生更多的可能性，希望在和大家交流的过程中碰撞出新的灵感的火花。",
       tagsText: "AIGC，投放，广告优化师，创意策划，游戏出海，养鸟人",
-      MBTI: "ENFP",
+      MBTI: "",
       photo: "contact-photos/user_063.jpg",
       fallbackEmoji: "🦜"
     }
@@ -859,10 +876,23 @@ export function generateClassmates(): Classmate[] {
       home = "杭州";
     }
 
+    // Clear original MBTI field first, then refill it from other descriptive fields.
+    const mbtiSourceText = [
+      item.tagsText,
+      item.experience,
+      item.futureExpectation,
+      item.canHelp,
+      item.hobbies,
+      item.companyTitle
+    ].join(" ");
+
+    const extractedMBTI = extractMBTIFromText(mbtiSourceText);
+
     return {
       ...item,
       currentCity: city,
       hometown: home,
+      MBTI: MBTI_TYPES.includes(extractedMBTI) ? extractedMBTI : "",
       className: "周末4班",
       bgColor: BG_COLORS[index % BG_COLORS.length]
     };
