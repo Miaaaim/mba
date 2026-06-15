@@ -146,6 +146,7 @@ export const Classmates: React.FC = () => {
   const [showCityModal, setShowCityModal] = useState(false);
   const [showMBTIModal, setShowMBTIModal] = useState(false);
   const [showHobbyModal, setShowHobbyModal] = useState(false);
+  const [showHometownModal, setShowHometownModal] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -183,6 +184,24 @@ export const Classmates: React.FC = () => {
     return Object.entries(cityCounts)
       .map(([city, count]) => ({
         city,
+        count,
+        percentage: ((count / classmates.length) * 100).toFixed(1),
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [classmates]);
+
+  // Hometown distribution for modal
+  const hometownDistribution = useMemo(() => {
+    const provinceCounts: Record<string, number> = {};
+    classmates.forEach(c => {
+      const province = getProvinceFromLocation(c.hometown);
+      if (province) {
+        provinceCounts[province] = (provinceCounts[province] || 0) + 1;
+      }
+    });
+    return Object.entries(provinceCounts)
+      .map(([province, count]) => ({
+        province,
         count,
         percentage: ((count / classmates.length) * 100).toFixed(1),
       }))
@@ -331,13 +350,20 @@ export const Classmates: React.FC = () => {
 
       {/* Top micro card indicators / stat panel */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <div className="bg-[#FFF5D2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[-1deg]">
+        <div 
+          className="bg-[#FFF5D2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[-1deg] cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => setShowHometownModal(true)}
+        >
           <span className="block font-mono text-xs text-gray-500 font-bold uppercase leading-none mb-1">
             共创成员总数 //
           </span>
           <span className="font-sans font-black text-2xl text-black">
             {stats.total} 位精英同学
           </span>
+          <div className="mt-2 flex items-center gap-1 text-xs font-bold text-gray-600">
+            <MapPin size={14} />
+            <span>点击查看家乡分布</span>
+          </div>
         </div>
         <div 
           className="bg-[#FFE2F2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[1deg] cursor-pointer hover:scale-105 transition-transform"
@@ -1048,6 +1074,55 @@ export const Classmates: React.FC = () => {
 
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* 家乡分布弹窗 */}
+      {showHometownModal && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowHometownModal(false)}
+        >
+          <div
+            className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-sans font-black text-2xl flex items-center gap-2">
+                <MapPin className="text-yellow-500" />
+                家乡省份分布
+              </h3>
+              <button
+                onClick={() => setShowHometownModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-3">
+              {hometownDistribution.map((item) => (
+                <div key={item.province} className="flex items-center gap-3">
+                  <span className="font-sans font-bold text-sm w-20 shrink-0 truncate" title={item.province}>
+                    {item.province}
+                  </span>
+                  <div className="flex-1 bg-gray-200 rounded-full h-6 relative overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-yellow-400 to-orange-400 h-full rounded-full flex items-center justify-end pr-2 transition-all duration-500"
+                      style={{ width: `${item.percentage}%` }}
+                    >
+                      <span className="text-xs font-black text-white">{item.count}</span>
+                    </div>
+                  </div>
+                  <span className="font-mono text-xs font-bold text-gray-600 w-12 text-right">
+                    {item.percentage}%
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm font-bold text-gray-500">
+              共 {hometownDistribution.length} 个省份 • {stats.total} 位同学
+            </div>
           </div>
         </div>
       )}
