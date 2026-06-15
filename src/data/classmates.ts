@@ -173,23 +173,6 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🧘"
     },
     {
-      id: "user-010",
-      name: "翟运波",
-      className: "周末4班",
-      hometown: "云南宣威",
-      currentCity: "杭州",
-      contact: "18611270830",
-      hobbies: "网球🎾、羽毛球🏸、游泳🏊、滑雪🏂、高尔夫🏌️‍♂️",
-      companyTitle: "新华三技术有限公司",
-      experience: "HUST、投资、餐饮及保险",
-      canHelp: "AI基础设施相关产品 and / & 方案",
-      futureExpectation: "运动、读书和搞钱，希望遇到志趣相投的朋友。",
-      tagsText: "白羊座&INTJ 高级工程师/E类人才/香港高才",
-      MBTI: "",
-      photo: "contact-photos/user_010.jpg",
-      fallbackEmoji: "🎾"
-    },
-    {
       id: "user-011",
       name: "高姗",
       className: "周末4班",
