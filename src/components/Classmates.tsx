@@ -39,6 +39,55 @@ const CITY_TO_PROVINCE_MAP: Record<string, string> = {
   绍兴: "浙江"
 };
 
+function normalizeHobbyToken(hobby: string): string[] {
+  const withoutEmoji = hobby
+    .replace(/[\p{Extended_Pictographic}\p{Emoji_Modifier}\uFE0F\u200D]/gu, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!withoutEmoji) return [];
+
+  // Split compound hobbies without separators: "健身游泳" -> "健身,游泳"
+  const compoundSplit = withoutEmoji.replace(/健身游泳/, "健身,游泳");
+  const results: string[] = [];
+
+  compoundSplit.split(",").forEach(token => {
+    const trimmed = token.trim();
+    if (!trimmed) return;
+
+    // Remove complete parenthetical suffix: "游泳（学习中）" -> "游泳"
+    const withoutSuffix = trimmed.replace(/（[^）]*）$/, "").trim();
+    if (withoutSuffix && !withoutSuffix.includes("（")) {
+      const base = withoutSuffix;
+      if (base === "键盘") return; // delete "键盘）" artifact
+      if (base.includes("唱歌")) { results.push("唱歌"); return; }
+      if (base === "K歌") { results.push("唱歌"); return; }
+      results.push(base);
+      return;
+    }
+
+    // Remove trailing brackets: "魂游）" -> "魂游", "桌游）" -> "桌游"
+    const cleaned = trimmed.replace(/[）\)]+$/, "");
+    if (!cleaned) return;
+
+    if (cleaned === "键盘") return; // delete "键盘）" artifact
+
+    if (cleaned.includes("唱歌")) { results.push("唱歌"); return; }
+    if (cleaned === "K歌") { results.push("唱歌"); return; }
+
+    // Complete unmatched left brackets: "游戏（lol" -> "游戏（lol）", "音乐（ukulele" -> "音乐（ukulele）"
+    const hasUnmatchedLeftBracket = (cleaned.match(/（/g) || []).length > (cleaned.match(/）/g) || []).length;
+    if (hasUnmatchedLeftBracket) {
+      results.push(cleaned + "）");
+      return;
+    }
+
+    results.push(cleaned);
+  });
+
+  return results;
+}
+
 export const Classmates: React.FC = () => {
   const MOBILE_BREAKPOINT_QUERY = "(max-width: 639px)";
   const MOBILE_INITIAL_VISIBLE_COUNT = 6; // mobile grid is 2 columns, default to 3 rows
@@ -166,11 +215,11 @@ export const Classmates: React.FC = () => {
   const hobbyWordCloud = useMemo(() => {
     const wordCounts: Record<string, number> = {};
     classmates.forEach(c => {
-      c.hobbies.split(/[,，、/]/).forEach(hobby => {
-        const trimmed = hobby.trim();
-        if (trimmed) {
-          wordCounts[trimmed] = (wordCounts[trimmed] || 0) + 1;
-        }
+      c.hobbies.split(/[,，、/\s]/).forEach(hobby => {
+        const normalizedTokens = normalizeHobbyToken(hobby);
+        normalizedTokens.forEach(normalized => {
+          wordCounts[normalized] = (wordCounts[normalized] || 0) + 1;
+        });
       });
     });
     return Object.entries(wordCounts)
