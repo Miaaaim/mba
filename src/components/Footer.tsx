@@ -1,6 +1,6 @@
 import React from "react";
 import { HandwrittenDoodle } from "./HandwrittenDoodle";
-import { Github, Twitter, Linkedin, Award, Globe } from "lucide-react";
+import { Award, Globe } from "lucide-react";
 
 interface FooterProps {
   onScrollTo: (sectionId: string) => void;
@@ -11,32 +11,10 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
 
   const socialLinks = [
     {
-      name: "Github",
-      icon: <Github className="w-5 h-5" />,
-      url: "https://github.com",
-      color: "bg-black text-[#A3E635] hover:bg-[#111]",
-    },
-    {
-      name: "Twitter / X",
-      icon: <Twitter className="w-5 h-5" />,
-      url: "https://twitter.com",
-      color: "bg-[#1DA1F2] text-white hover:bg-[#0c85d0]",
-    },
-    {
-      name: "LinkedIn",
-      icon: <Linkedin className="w-5 h-5" />,
-      url: "https://linkedin.com",
-      color: "bg-[#0A66C2] text-white hover:bg-[#004182]",
-    },
-    {
-      name: "Dribbble",
-      icon: (
-        <span className="font-sans font-black text-xs leading-none select-none">
-          🏀 Dribbble
-        </span>
-      ),
-      url: "https://dribbble.com",
-      color: "bg-[#EA4C89] text-white hover:bg-[#d93774]",
+      name: "浙大校徽",
+      icon: <span className="font-sans font-black text-sm leading-none select-none">浙</span>,
+      url: "https://www.zju.edu.cn/",
+      color: "bg-[#003366] text-white hover:bg-[#002244]",
     },
   ];
 
@@ -46,7 +24,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
       {/* Footer Doodles */}
       <div className="absolute top-[-25px] left-10 pointer-events-none select-none">
         <div className="bg-[#A3E635] border-2 border-black rounded-lg px-2 py-1 text-xs font-black text-black uppercase tracking-widest leading-none rotate-[-4deg]">
-          美学视觉安全区
+          砥砺前行
         </div>
       </div>
 
@@ -58,9 +36,9 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
             <HandwrittenDoodle type="star-blue" className="w-10 h-10 absolute animate-spin-slow" />
           </div>
           <div className="text-left">
-            <span className="font-mono text-xl font-black text-black block leading-none">znis</span>
+            <span className="font-mono text-xl font-black text-black block leading-none">浙大MBA26级</span>
             <span className="font-sans text-xs text-gray-500 font-bold tracking-wider uppercase block mt-1">
-              UX 交互与体验研发专家 // 旧金山
+              周末4班
             </span>
           </div>
         </div>
@@ -116,7 +94,7 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-400/30 text-xs font-mono text-gray-400 font-semibold">
         <div className="flex items-center gap-2">
           <Award className="w-4 h-4 text-black" />
-          <span>版权所有 © {year} Zainab (znis)。保留一切权利。</span>
+          <span>如有内容问题，可联系圆圆修改</span>
         </div>
         
         <div className="flex items-center gap-1">

@@ -176,6 +176,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
           </p>
 
           {/* Custom CTA Action with Sketch Indicators */}
+          {/*
           <div className="relative group">
             <button
               onClick={onSeePortfolio}
@@ -183,12 +184,12 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             >
               <span>班级共创 💡</span>
             </button>
-            
-            {/* Draw lines under the see portfolio button */}
+
             <div className="absolute -bottom-6 left-2 pointer-events-none">
               <HandwrittenDoodle type="accent-dots" className="w-14 h-8 text-black opacity-80" />
             </div>
           </div>
+          */}
         </div>
 
         {/* Right Column: Sketched Whiteboard and Photo Tab selectors */}

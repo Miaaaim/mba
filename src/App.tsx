@@ -64,7 +64,7 @@ export default function App() {
         */}
 
         {/* Client feedback deck and custom builder stamps */}
-        <Testimonials />
+        {/* <Testimonials /> */}
 
         {/* Let's design something / Custom forms (Temporarily hidden) */}
         {/* <Contact /> */}

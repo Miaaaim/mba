@@ -1,11 +1,20 @@
-import React, { useState, useMemo } from "react";
-import { generateClassmates, Classmate } from "../data/classmates";
+import React, { useState, useMemo, useEffect } from "react";
+import { generateClassmates, Classmate, MBTI_TYPES } from "../data/classmates";
 import { HandwrittenDoodle } from "./HandwrittenDoodle";
 import { 
   Search, X, Copy, MapPin, Briefcase, Heart, 
   Smile, Compass, HelpCircle, Check, Award, ArrowUpRight,
   LayoutGrid, List, ArrowRight, ChevronDown
 } from "lucide-react";
+
+const MBTI_REGEX = /INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP/g;
+
+function parseMBTIList(mbtiText: string): string[] {
+  if (!mbtiText) return [];
+
+  const matches = mbtiText.toUpperCase().match(MBTI_REGEX) ?? [];
+  return Array.from(new Set(matches.filter((type) => MBTI_TYPES.includes(type))));
+}
 
 const PROVINCE_LABELS = [
   "北京", "天津", "上海", "重庆",
@@ -19,6 +28,7 @@ const PROVINCE_LABELS = [
 
 const CITY_TO_PROVINCE_MAP: Record<string, string> = {
   杭州: "浙江",
+  杭州萧山: "浙江",
   台州: "浙江",
   义乌: "浙江",
   温州: "浙江",
@@ -30,7 +40,20 @@ const CITY_TO_PROVINCE_MAP: Record<string, string> = {
 };
 
 export const Classmates: React.FC = () => {
+  const MOBILE_BREAKPOINT_QUERY = "(max-width: 639px)";
+  const MOBILE_INITIAL_VISIBLE_COUNT = 6; // mobile grid is 2 columns, default to 3 rows
+  const DESKTOP_INITIAL_VISIBLE_COUNT = 16;
+
   const classmates = useMemo(() => generateClassmates(), []);
+
+  const getIsMobileViewport = () => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(MOBILE_BREAKPOINT_QUERY).matches;
+  };
+
+  const getInitialVisibleCount = () => {
+    return getIsMobileViewport() ? MOBILE_INITIAL_VISIBLE_COUNT : DESKTOP_INITIAL_VISIBLE_COUNT;
+  };
 
   const getProvinceFromLocation = (location: string): string => {
     const raw = (location || "").trim();
@@ -65,23 +88,39 @@ export const Classmates: React.FC = () => {
   // View mode: 'grid' (classic cards) or 'list' (compact row list)
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   // Number of cards to show in grid mode initially
-  const [visibleCount, setVisibleCount] = useState(16);
+  const [visibleCount, setVisibleCount] = useState(getInitialVisibleCount);
+  const [isMobileViewport, setIsMobileViewport] = useState(getIsMobileViewport);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia(MOBILE_BREAKPOINT_QUERY);
+    const onViewportChange = (event: MediaQueryListEvent) => {
+      setIsMobileViewport(event.matches);
+    };
+
+    setIsMobileViewport(mediaQuery.matches);
+    mediaQuery.addEventListener("change", onViewportChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", onViewportChange);
+    };
+  }, []);
 
   // Quick statistics
   const stats = useMemo(() => {
     const counts = {
       total: classmates.length,
       cities: new Set(classmates.map(c => c.currentCity)).size,
-      mbtis: new Set(classmates.map(c => c.MBTI).filter(m => !!(m && m.trim()))).size,
+      mbtis: new Set(classmates.flatMap(c => parseMBTIList(c.MBTI))).size,
     };
     return counts;
   }, [classmates]);
 
-  // List of unique MBTIs for quick filter tabs
+  // Show complete 16 MBTI types in quick filters.
   const topMBTIs = useMemo(() => {
-    const list = Array.from(new Set(classmates.map(c => c.MBTI).filter(m => m && m.trim() !== "")));
-    return list.slice(0, 8); // top 8 to avoid cluttering
-  }, [classmates]);
+    return MBTI_TYPES;
+  }, []);
 
   // List of top active cities for quick filter tabs
   const topCities = useMemo(() => {
@@ -120,9 +159,9 @@ export const Classmates: React.FC = () => {
       let mbtiMatch = true;
       if (selectedMBTI) {
         if (selectedMBTI === "其他") {
-          mbtiMatch = !c.MBTI || c.MBTI.trim() === "";
+          mbtiMatch = parseMBTIList(c.MBTI).length === 0;
         } else {
-          mbtiMatch = c.MBTI === selectedMBTI;
+          mbtiMatch = parseMBTIList(c.MBTI).includes(selectedMBTI);
         }
       }
 
@@ -151,7 +190,7 @@ export const Classmates: React.FC = () => {
     setSelectedMBTI(null);
     setSelectedCity(null);
     setSelectedHometown(null);
-    setVisibleCount(16);
+    setVisibleCount(getInitialVisibleCount());
   };
 
   return (
@@ -530,17 +569,21 @@ export const Classmates: React.FC = () => {
           {/* Load More Button Container */}
           {filteredClassmates.length > visibleCount && (
             <div className="mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in duration-300">
-              <button
-                onClick={() => setVisibleCount(prev => prev + 16)}
-                className="w-full sm:w-auto px-6 py-3.5 bg-[#A1FC3A] hover:bg-[#8ee031] border-2 border-black rounded-xl font-sans text-sm font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer"
-              >
-                加载更多同学 ⚡ (+16)
-              </button>
+              {!isMobileViewport && (
+                <button
+                  onClick={() => setVisibleCount(prev => prev + 16)}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#A1FC3A] hover:bg-[#8ee031] border-2 border-black rounded-xl font-sans text-sm font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer"
+                >
+                  加载更多同学 ⚡ (+16)
+                </button>
+              )}
               <button
                 onClick={() => setVisibleCount(filteredClassmates.length)}
                 className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-gray-50 border-2 border-black rounded-xl font-sans text-xs font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer text-gray-700"
               >
-                直接显示全部 ({filteredClassmates.length} 人)
+                {isMobileViewport
+                  ? `查看全部 (${filteredClassmates.length} 人)`
+                  : `直接显示全部 (${filteredClassmates.length} 人)`}
               </button>
             </div>
           )}
@@ -644,7 +687,7 @@ export const Classmates: React.FC = () => {
             </button>
 
             {/* Left Column: Visual Avatar & Primary Identification */}
-            <div className="flex flex-col items-center shrink-0 w-full md:w-48 text-center border-b md:border-b-0 md:border-r border-dashed border-gray-400 pb-5 md:pb-0 md:pr-6">
+            <div className="flex flex-col items-center shrink-0 w-full md:w-56 text-center border-b md:border-b-0 md:border-r border-dashed border-gray-400 pb-5 md:pb-0 md:pr-6">
               
               {/* Sticker Indicator inside popup */}
               {selectedClassmate.MBTI && selectedClassmate.MBTI.trim() !== "" && (
@@ -654,7 +697,7 @@ export const Classmates: React.FC = () => {
               )}
 
               {/* Main Photo avatar */}
-              <div className="w-24 h-24 bg-white border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)] relative overflow-hidden mb-4">
+              <div className="w-40 h-40 md:w-[13rem] md:h-[13rem] bg-white border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)] relative overflow-hidden mb-4">
                 {selectedClassmate.photo ? (
                   <img
                     src={`/${selectedClassmate.photo}`}
@@ -740,7 +783,7 @@ export const Classmates: React.FC = () => {
                     <Briefcase className="w-3.5 h-3.5 text-black" />
                     <span>经历简介 (Experience):</span>
                   </label>
-                  <div className="bg-white border-2 border-black rounded-xl p-3 font-sans text-sm md:text-base text-gray-800 font-semibold leading-relaxed shadow-[2px_2px_0_0_#000]">
+                  <div className="bg-white border-2 border-black rounded-xl p-3 font-sans text-sm md:text-sm text-gray-800 font-semibold leading-relaxed shadow-[2px_2px_0_0_#000]">
                     {selectedClassmate.experience}
                   </div>
                 </div>
@@ -753,7 +796,7 @@ export const Classmates: React.FC = () => {
                     <HelpCircle className="w-3.5 h-3.5 text-black" />
                     <span>我可提供的支持 (Can Help):</span>
                   </label>
-                  <div className="bg-[#D2F4E2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-base text-gray-800 font-extrabold leading-relaxed shadow-[2px_2px_0_0_#000]">
+                  <div className="bg-[#D2F4E2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-sm text-gray-800 font-extrabold leading-relaxed shadow-[2px_2px_0_0_#000]">
                     {selectedClassmate.canHelp}
                   </div>
                 </div>
@@ -766,7 +809,7 @@ export const Classmates: React.FC = () => {
                     <Smile className="w-3.5 h-3.5 text-black" />
                     <span>期待对接/搭子方向 (Expectations):</span>
                   </label>
-                  <div className="bg-[#FFF5D2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-base text-gray-800 font-bold leading-relaxed shadow-[2px_2px_0_0_#000]">
+                  <div className="bg-[#FFF5D2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-sm text-gray-800 font-bold leading-relaxed shadow-[2px_2px_0_0_#000]">
                     {selectedClassmate.futureExpectation}
                   </div>
                 </div>
@@ -779,7 +822,7 @@ export const Classmates: React.FC = () => {
                     <Heart className="w-3.5 h-3.5 text-pink-500" />
                     <span>兴趣特长 (Hobbies):</span>
                   </label>
-                  <div className="bg-[#FFE2F2] border-2 border-black rounded-xl p-3 font-sans text-xs md:text-sm text-gray-700 font-bold leading-relaxed shadow-[1.5px_1.5px_0_0_#000]">
+                  <div className="bg-[#FFE2F2] border-2 border-black rounded-xl p-3 font-sans text-sm md:text-sm text-gray-700 font-bold leading-relaxed shadow-[1.5px_1.5px_0_0_#000]">
                     {selectedClassmate.hobbies}
                   </div>
                 </div>
@@ -790,20 +833,30 @@ export const Classmates: React.FC = () => {
                 <div className="pt-2">
                   <button
                     onClick={() => handleCopyContact(selectedClassmate.id, selectedClassmate.contact)}
-                    className="w-full bg-[#98D2EB] hover:bg-sky-400 border-2 border-black rounded-xl py-3.5 px-4 font-sans font-black text-sm uppercase flex items-center justify-between transition-colors shadow-[3px_3px_0_0_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0_0_rgba(0,0,0,1)] cursor-pointer"
+                    className={`w-full border-2 border-black rounded-2xl py-3.5 px-4 font-sans font-black text-sm uppercase flex items-center justify-between transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0_0_rgba(0,0,0,1)] cursor-pointer ${
+                      copiedId === selectedClassmate.id
+                        ? "bg-[#A1FC3A] text-black hover:bg-[#8ee031]"
+                        : "bg-black text-[#A1FC3A] hover:bg-[#1E1E1E] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)]"
+                    }`}
                   >
                     <span className="flex items-center gap-1.5">
                       {copiedId === selectedClassmate.id ? (
                         <Check className="w-4 h-4 text-emerald-800 animate-bounce" />
                       ) : (
-                        <Copy className="w-4 h-4 text-black" />
+                        <Copy className="w-4 h-4 text-[#A1FC3A]" />
                       )}
                       <span>
                         {copiedId === selectedClassmate.id ? "钉入剪贴板成功！" : `一键复制联系微信 (${selectedClassmate.contact})`}
                       </span>
                     </span>
                     
-                    <span className="bg-white border border-black rounded-md px-1.5 py-0.5 text-xs font-mono font-bold leading-none select-none text-black">
+                    <span
+                      className={`border border-black rounded-md px-2 py-0.5 text-xs font-mono font-black leading-none select-none ${
+                        copiedId === selectedClassmate.id
+                          ? "bg-black text-[#A1FC3A]"
+                          : "bg-[#A1FC3A] text-black"
+                      }`}
+                    >
                       {copiedId === selectedClassmate.id ? "COPIED" : "COPY"}
                     </span>
                   </button>

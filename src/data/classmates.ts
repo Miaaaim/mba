@@ -26,21 +26,29 @@ const BG_COLORS = [
   "bg-[#D3F4FF]"  // Soft cyan
 ];
 
-const MBTI_TYPES = [
+export const MBTI_TYPES = [
   "INTJ", "INTP", "ENTJ", "ENTP",
   "INFJ", "INFP", "ENFJ", "ENFP",
   "ISTJ", "ISFJ", "ESTJ", "ESFJ",
   "ISTP", "ISFP", "ESTP", "ESFP"
 ];
 
-function extractMBTIFromText(text: string): string {
-  if (!text) return "";
+function extractMBTIListFromText(text: string): string[] {
+  if (!text) return [];
 
-  const matched = text
+  const matches = text
     .toUpperCase()
-    .match(/(?:^|[^A-Z])(INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP)(?=$|[^A-Z])/);
+    .matchAll(/(?:^|[^A-Z])(INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP)(?=$|[^A-Z])/g);
 
-  return matched?.[1] ?? "";
+  const found: string[] = [];
+  for (const m of matches) {
+    const type = m[1];
+    if (type && MBTI_TYPES.includes(type) && !found.includes(type)) {
+      found.push(type);
+    }
+  }
+
+  return found;
 }
 
 export function generateClassmates(): Classmate[] {
@@ -59,7 +67,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "保持探索",
       tagsText: "实验室搬砖人、INTP（EJ横跳）",
       MBTI: "",
-      photo: "contact-photos/user_001.jpg",
+      photo: "contact-photos/user_001.png",
       fallbackEmoji: "🧪"
     },
     {
@@ -330,7 +338,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "消费品板块资源对接",
       futureExpectation: "希望对一切保持好奇与热情",
       tagsText: "土澳留子/“小蝴蝶”/真的大写I人",
-      MBTI: "",
+      MBTI: "INFP",
       photo: "contact-photos/user_022.jpg",
       fallbackEmoji: "🦋"
     },
@@ -483,7 +491,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "定制化组织诊断，组织人才发展方案",
       futureExpectation: "一起认识有趣的搭子，探索新赛道",
       tagsText: "ISTJ/ENFP顺畅切换；自由灵魂；体验人生",
-      MBTI: "",
+      MBTI: "ISTJ/ENFP",
       photo: "contact-photos/user_034.jpg",
       fallbackEmoji: "🏃‍♀️"
     },
@@ -619,7 +627,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "政企项目资源、家电产销渠道",
       futureExpectation: "期待认识各行各业的伙伴，未来一起学习成长、互帮互助、可以多碰撞出一些火花",
       tagsText: "海外留子| 科创数智 | ENFP or ENFJ",
-      MBTI: "",
+      MBTI: "ENFP/ENFJ",
       photo: "contact-photos/user_045.png",
       fallbackEmoji: "🎥"
     },
@@ -807,7 +815,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "希望给更多户外爱好者带来体验和探索新乐趣，让小众走向大众。",
       tagsText: "海康威视、户外产品、钓鱼装备、热成像",
       MBTI: "",
-      photo: "contact-photos/user_061.jpg",
+      photo: "contact-photos/user_061.png",
       fallbackEmoji: "🎣"
     },
     {
@@ -823,7 +831,7 @@ export function generateClassmates(): Classmate[] {
       canHelp: "提供全域人力咨询以及对于整车行业链接",
       futureExpectation: "一起学习，一起成长，遇见更好的自己",
       tagsText: "INTJ 常年徘徊于E与I 喜爱钓鱼但常年空军",
-      MBTI: "",
+      MBTI: "INTJ/ENTJ",
       photo: "contact-photos/user_062.png",
       fallbackEmoji: "🎣"
     },
@@ -876,8 +884,9 @@ export function generateClassmates(): Classmate[] {
       home = "杭州";
     }
 
-    // Clear original MBTI field first, then refill it from other descriptive fields.
+    // Allow explicit MBTI in source data and support multiple types like ENFP/ENFJ.
     const mbtiSourceText = [
+      item.MBTI,
       item.tagsText,
       item.experience,
       item.futureExpectation,
@@ -886,13 +895,13 @@ export function generateClassmates(): Classmate[] {
       item.companyTitle
     ].join(" ");
 
-    const extractedMBTI = extractMBTIFromText(mbtiSourceText);
+    const extractedMBTIs = extractMBTIListFromText(mbtiSourceText);
 
     return {
       ...item,
       currentCity: city,
       hometown: home,
-      MBTI: MBTI_TYPES.includes(extractedMBTI) ? extractedMBTI : "",
+      MBTI: extractedMBTIs.join("/"),
       className: "周末4班",
       bgColor: BG_COLORS[index % BG_COLORS.length]
     };
