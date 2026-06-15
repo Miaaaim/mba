@@ -803,8 +803,14 @@ export const Classmates: React.FC = () => {
 
       {/* --- CLASSMATE CO-CREATION MODAL POPUP --- */}
       {selectedClassmate && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative w-full max-w-2xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto flex flex-col md:flex-row p-6 md:p-8 gap-6 animate-in fade-in zoom-in-95 duration-200">
+        <div
+          className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          onClick={() => setSelectedClassmate(null)}
+        >
+          <div
+            className="relative w-full max-w-2xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto flex flex-col md:flex-row p-6 md:p-8 gap-6 animate-in fade-in zoom-in-95 duration-200"
+            onClick={(e) => e.stopPropagation()}
+          >
             
             {/* Close button on top right */}
             <button
@@ -999,8 +1005,14 @@ export const Classmates: React.FC = () => {
 
       {/* 城市分布弹窗 */}
       {showCityModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowCityModal(false)}
+        >
+          <div
+            className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-sans font-black text-2xl flex items-center gap-2">
                 <MapPin className="text-pink-500" />
@@ -1042,8 +1054,14 @@ export const Classmates: React.FC = () => {
 
       {/* MBTI分布弹窗 */}
       {showMBTIModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowMBTIModal(false)}
+        >
+          <div
+            className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-sans font-black text-2xl flex items-center gap-2">
                 <Brain className="text-green-500" />
@@ -1079,8 +1097,14 @@ export const Classmates: React.FC = () => {
 
       {/* 爱好词云弹窗 */}
       {showHobbyModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-3xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
+          onClick={() => setShowHobbyModal(false)}
+        >
+          <div
+            className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-3xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex items-center justify-between mb-6">
               <h3 className="font-sans font-black text-2xl flex items-center gap-2">
                 <Zap className="text-violet-500" />
