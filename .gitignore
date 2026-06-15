@@ -9,4 +9,3 @@ coverage/
 .env*
 !.env.example
 !.env.production.example
-!.env.deploy.example
