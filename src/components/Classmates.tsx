@@ -4,7 +4,7 @@ import { HandwrittenDoodle } from "./HandwrittenDoodle";
 import { 
   Search, X, Copy, MapPin, Briefcase, Heart, 
   Smile, Compass, HelpCircle, Check, Award, ArrowUpRight,
-  LayoutGrid, List, ArrowRight, ChevronDown
+  LayoutGrid, List, ArrowRight, ChevronDown, BarChart3, Brain, Zap
 } from "lucide-react";
 
 const MBTI_REGEX = /INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP/g;
@@ -93,6 +93,11 @@ export const Classmates: React.FC = () => {
   const [listVisibleCount, setListVisibleCount] = useState(8);
   const [isMobileViewport, setIsMobileViewport] = useState(getIsMobileViewport);
 
+  // Stats modal states
+  const [showCityModal, setShowCityModal] = useState(false);
+  const [showMBTIModal, setShowMBTIModal] = useState(false);
+  const [showHobbyModal, setShowHobbyModal] = useState(false);
+
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -117,6 +122,64 @@ export const Classmates: React.FC = () => {
       mbtis: new Set(classmates.flatMap(c => parseMBTIList(c.MBTI))).size,
     };
     return counts;
+  }, [classmates]);
+
+  // City distribution for modal
+  const cityDistribution = useMemo(() => {
+    const cityCounts: Record<string, number> = {};
+    classmates.forEach(c => {
+      const city = c.currentCity;
+      cityCounts[city] = (cityCounts[city] || 0) + 1;
+    });
+    return Object.entries(cityCounts)
+      .map(([city, count]) => ({
+        city,
+        count,
+        percentage: ((count / classmates.length) * 100).toFixed(1),
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [classmates]);
+
+  // MBTI distribution for modal
+  const mbtiDistribution = useMemo(() => {
+    const mbtiCounts: Record<string, number> = {};
+    classmates.forEach(c => {
+      const mbtis = parseMBTIList(c.MBTI);
+      if (mbtis.length === 0) {
+        mbtiCounts["其他"] = (mbtiCounts["其他"] || 0) + 1;
+      } else {
+        mbtis.forEach(mbti => {
+          mbtiCounts[mbti] = (mbtiCounts[mbti] || 0) + 1;
+        });
+      }
+    });
+    return Object.entries(mbtiCounts)
+      .map(([mbti, count]) => ({
+        mbti,
+        count,
+        percentage: ((count / classmates.length) * 100).toFixed(1),
+      }))
+      .sort((a, b) => b.count - a.count);
+  }, [classmates]);
+
+  // Hobby word cloud data
+  const hobbyWordCloud = useMemo(() => {
+    const wordCounts: Record<string, number> = {};
+    classmates.forEach(c => {
+      c.hobbies.split(/[,，、/]/).forEach(hobby => {
+        const trimmed = hobby.trim();
+        if (trimmed) {
+          wordCounts[trimmed] = (wordCounts[trimmed] || 0) + 1;
+        }
+      });
+    });
+    return Object.entries(wordCounts)
+      .map(([word, count]) => ({
+        word,
+        count,
+        percentage: ((count / classmates.length) * 100).toFixed(1),
+      }))
+      .sort((a, b) => b.count - a.count);
   }, [classmates]);
 
   // Show complete 16 MBTI types in quick filters.
@@ -227,29 +290,50 @@ export const Classmates: React.FC = () => {
             {stats.total} 位精英同学
           </span>
         </div>
-        <div className="bg-[#FFE2F2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[1deg]">
+        <div 
+          className="bg-[#FFE2F2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[1deg] cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => setShowCityModal(true)}
+        >
           <span className="block font-mono text-xs text-gray-500 font-bold uppercase leading-none mb-1">
             常驻活跃城市 //
           </span>
           <span className="font-sans font-black text-2xl text-black">
             {stats.cities} 个主流枢纽
           </span>
+          <div className="mt-2 flex items-center gap-1 text-xs font-bold text-gray-600">
+            <BarChart3 size={14} />
+            <span>点击查看分布</span>
+          </div>
         </div>
-        <div className="bg-[#D2F4E2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[-1.5deg]">
+        <div 
+          className="bg-[#D2F4E2] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[-1.5deg] cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => setShowMBTIModal(true)}
+        >
           <span className="block font-mono text-xs text-gray-500 font-bold uppercase leading-none mb-1">
             MBTI 多元分布 //
           </span>
           <span className="font-sans font-black text-2xl text-black">
             {stats.mbtis} 种人格图谱
           </span>
+          <div className="mt-2 flex items-center gap-1 text-xs font-bold text-gray-600">
+            <Brain size={14} />
+            <span>点击查看分布</span>
+          </div>
         </div>
-        <div className="bg-[#E2DEFF] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[1.5deg]">
+        <div 
+          className="bg-[#E2DEFF] border-2 border-black rounded-2xl p-4 shadow-[4px_4px_0_0_#000] rotate-[1.5deg] cursor-pointer hover:scale-105 transition-transform"
+          onClick={() => setShowHobbyModal(true)}
+        >
           <span className="block font-mono text-xs text-gray-500 font-bold uppercase leading-none mb-1">
             搭子连线几率 //
           </span>
           <span className="font-sans font-black text-2xl text-violet-800 flex items-center gap-1.5 font-bold">
             100% 极速对接 ⚡
           </span>
+          <div className="mt-2 flex items-center gap-1 text-xs font-bold text-gray-600">
+            <Zap size={14} />
+            <span>点击查看词云</span>
+          </div>
         </div>
       </div>
 
@@ -909,6 +993,129 @@ export const Classmates: React.FC = () => {
 
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* 城市分布弹窗 */}
+      {showCityModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-sans font-black text-2xl flex items-center gap-2">
+                <MapPin className="text-pink-500" />
+                常驻活跃城市分布
+              </h3>
+              <button
+                onClick={() => setShowCityModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="space-y-3">
+              {cityDistribution.map((item) => (
+                <div key={item.city} className="flex items-center gap-3">
+                  <span className="font-sans font-bold text-sm w-24 shrink-0 truncate" title={item.city}>
+                    {item.city}
+                  </span>
+                  <div className="flex-1 bg-gray-200 rounded-full h-6 relative overflow-hidden">
+                    <div
+                      className="bg-gradient-to-r from-pink-400 to-pink-500 h-full rounded-full flex items-center justify-end pr-2 transition-all duration-500"
+                      style={{ width: `${item.percentage}%` }}
+                    >
+                      <span className="text-xs font-black text-white">{item.count}</span>
+                    </div>
+                  </div>
+                  <span className="font-mono text-xs font-bold text-gray-600 w-12 text-right">
+                    {item.percentage}%
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm font-bold text-gray-500">
+              共 {stats.cities} 个主流枢纽 • {stats.total} 位同学
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* MBTI分布弹窗 */}
+      {showMBTIModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-sans font-black text-2xl flex items-center gap-2">
+                <Brain className="text-green-500" />
+                MBTI 人格图谱分布
+              </h3>
+              <button
+                onClick={() => setShowMBTIModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {mbtiDistribution.map((item) => (
+                <div
+                  key={item.mbti}
+                  className="bg-[#D2F4E2] border-2 border-black rounded-xl p-3 flex items-center justify-between"
+                >
+                  <span className="font-mono font-black text-sm">{item.mbti}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-sans font-black text-lg">{item.count}</span>
+                    <span className="font-mono text-xs text-gray-600">({item.percentage}%)</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm font-bold text-gray-500">
+              共 {stats.mbtis} 种人格图谱 • {stats.total} 位同学
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 爱好词云弹窗 */}
+      {showHobbyModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+          <div className="bg-white border-2 border-black rounded-2xl p-6 md:p-8 max-w-3xl w-full max-h-[80vh] overflow-y-auto shadow-[8px_8px_0_0_#000]">
+            <div className="flex items-center justify-between mb-6">
+              <h3 className="font-sans font-black text-2xl flex items-center gap-2">
+                <Zap className="text-violet-500" />
+                搭子爱好词云图
+              </h3>
+              <button
+                onClick={() => setShowHobbyModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+            <div className="flex flex-wrap gap-3 justify-center">
+              {hobbyWordCloud.map((item) => {
+                const fontSize = Math.max(12, Math.min(32, item.count * 3));
+                const opacity = Math.max(0.4, Math.min(1, item.count / 10));
+                return (
+                  <span
+                    key={item.word}
+                    className="px-3 py-2 rounded-xl border-2 border-black font-sans font-black cursor-default hover:scale-110 transition-transform"
+                    style={{
+                      fontSize: `${fontSize}px`,
+                      opacity: opacity,
+                      backgroundColor: `rgba(161, 252, 58, ${opacity * 0.3})`,
+                    }}
+                    title={`${item.word}: ${item.count}人 (${item.percentage}%)`}
+                  >
+                    {item.word}
+                  </span>
+                );
+              })}
+            </div>
+            <div className="mt-6 pt-4 border-t-2 border-dashed border-gray-300 text-center text-sm font-bold text-gray-500">
+              共 {hobbyWordCloud.length} 种爱好标签 • {stats.total} 位同学
+            </div>
           </div>
         </div>
       )}
