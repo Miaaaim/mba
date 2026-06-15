@@ -24,14 +24,14 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
             
             {/* Polaroid frame inside */}
-            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-9/12 sm:w-10/12 md:w-11/12 max-w-[360px] sm:max-w-[420px] md:max-w-[460px] bg-white border-2 sm:border-2.5 border-black p-2 sm:p-3 md:p-3.5 pb-4 sm:pb-6 md:pb-8 rounded-lg rotate-[-2deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] flex flex-col items-center justify-center relative overflow-hidden group">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
                 
                 {/* Visual camera icon with pending hint */}
-                <span className="text-5xl animate-bounce">👋</span>
-                <span className="font-mono text-[11px] font-bold text-gray-400 mt-2">PHOTO PLACEHOLDER</span>
+                <span className="text-4xl sm:text-5xl animate-bounce">👋</span>
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold text-gray-400 mt-2">PHOTO PLACEHOLDER</span>
                 
                 {/* Pending overlay sticker */}
                 <div className="absolute top-2 right-2 bg-rose-500 text-white font-black text-[10px] border border-black px-1.5 py-0.5 rounded rotate-12 shadow-[1px_1px_0_0_#000]">
@@ -62,14 +62,14 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
 
             {/* Polaroid frame inside */}
-            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[2deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-9/12 sm:w-10/12 md:w-11/12 max-w-[360px] sm:max-w-[420px] md:max-w-[460px] bg-white border-2 sm:border-2.5 border-black p-2 sm:p-3 md:p-3.5 pb-4 sm:pb-6 md:pb-8 rounded-lg rotate-[2deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCF9E8] flex flex-col items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
                 
                 {/* Visual book icon with pending hint */}
-                <span className="text-5xl animate-pulse">🎓</span>
-                <span className="font-mono text-[11px] font-bold text-gray-400 mt-2">CLASSROOM RECORD</span>
+                <span className="text-4xl sm:text-5xl animate-pulse">🎓</span>
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold text-gray-400 mt-2">CLASSROOM RECORD</span>
                 
                 {/* Pending overlay sticker */}
                 <div className="absolute top-2 right-2 bg-rose-500 text-white font-black text-[10px] border border-black px-1.5 py-0.5 rounded -rotate-12 shadow-[1px_1px_0_0_#000]">
@@ -101,14 +101,14 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
             </div>
 
             {/* Polaroid frame inside */}
-            <div className="w-10/12 sm:w-11/12 max-w-[460px] bg-white border-2.5 border-black p-3.5 pb-8 rounded-lg rotate-[-1deg] shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
+            <div className="w-9/12 sm:w-10/12 md:w-11/12 max-w-[360px] sm:max-w-[420px] md:max-w-[460px] bg-white border-2 sm:border-2.5 border-black p-2 sm:p-3 md:p-3.5 pb-4 sm:pb-6 md:pb-8 rounded-lg rotate-[-1deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
               {/* Image box placeholder */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] flex flex-col items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
                 
                 {/* Visual fun icon with pending hint */}
-                <span className="text-5xl animate-bounce">🔥</span>
-                <span className="font-mono text-[11px] font-bold text-gray-400 mt-2">ICEBREAKER ACTIVITY</span>
+                <span className="text-4xl sm:text-5xl animate-bounce">🔥</span>
+                <span className="font-mono text-[10px] sm:text-[11px] font-bold text-gray-400 mt-2">ICEBREAKER ACTIVITY</span>
                 
                 {/* Pending overlay sticker */}
                 <div className="absolute top-2 right-2 bg-rose-500 text-white font-black text-[10px] border border-black px-1.5 py-0.5 rounded rotate-6 shadow-[1px_1px_0_0_#000]">
@@ -204,7 +204,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
           </div>
 
           {/* Large photo placeholder box */}
-          <div className="w-full max-w-[590px] aspect-[1.12/1] bg-[#FCFBF4] border-3 border-black rounded-3xl overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative rotate-[1deg] hover:rotate-0 transition-transform duration-300">
+          <div className="w-full max-w-[590px] aspect-[1.06/1] sm:aspect-[1.12/1] md:aspect-[1.12/1] bg-[#FCFBF4] border-3 border-black rounded-3xl overflow-hidden shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] relative rotate-[1deg] hover:rotate-0 transition-transform duration-300">
             {/* The Active Graphic */}
             <div className="w-full h-full relative">
               {renderPhotoPlaceholder()}
