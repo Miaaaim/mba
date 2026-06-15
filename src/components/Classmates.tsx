@@ -16,6 +16,11 @@ function parseMBTIList(mbtiText: string): string[] {
   return Array.from(new Set(matches.filter((type) => MBTI_TYPES.includes(type))));
 }
 
+function getPhotoUrl(photo: string): string {
+  const normalized = photo.replace(/^\/+/, "");
+  return `${import.meta.env.BASE_URL}${normalized}`;
+}
+
 const PROVINCE_LABELS = [
   "北京", "天津", "上海", "重庆",
   "河北", "山西", "辽宁", "吉林", "黑龙江",
@@ -666,7 +671,7 @@ export const Classmates: React.FC = () => {
                 <div className="w-24 h-24 bg-white border-2 border-black rounded-full mx-auto my-3 flex items-center justify-center shadow-[2px_2px_0_0_#000] relative overflow-hidden group-hover:scale-105 transition-transform duration-300">
                   {member.photo ? (
                     <img
-                      src={`/${member.photo}`}
+                      src={getPhotoUrl(member.photo)}
                       alt={member.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
@@ -773,7 +778,7 @@ export const Classmates: React.FC = () => {
                 <div className="w-9 h-9 bg-white border-2 border-black rounded-full shrink-0 flex items-center justify-center overflow-hidden shadow-[1px_1px_0_0_#000]">
                   {member.photo ? (
                     <img
-                      src={`/${member.photo}`}
+                      src={getPhotoUrl(member.photo)}
                       alt={member.name}
                       className="w-full h-full object-cover"
                       onError={(e) => {
@@ -909,7 +914,7 @@ export const Classmates: React.FC = () => {
               <div className="w-40 h-40 md:w-[13rem] md:h-[13rem] bg-white border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)] relative overflow-hidden mb-4">
                 {selectedClassmate.photo ? (
                   <img
-                    src={`/${selectedClassmate.photo}`}
+                    src={getPhotoUrl(selectedClassmate.photo)}
                     alt={selectedClassmate.name}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
