@@ -1,6 +1,6 @@
 {
-  "name": "Zainab的个人创意设计网站",
-  "description": "一个高交互、美观、专注于工作履历及代表案例的新野兽派自适应个人作品集。具有活泼的手写涂鸦、交互式职业活页夹系统、自定义推荐信生成器以及栩栩如生的交互 CSS/SVG 动效板。",
+  "name": "浙大MBA26级周末4班班级主页",
+  "description": "一个高交互、美观、聚焦班级成员风采、成长轨迹与共创记忆的浙大MBA26级周末4班主页，包含班级影像、同学名录、职业时间线与里程碑内容。",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

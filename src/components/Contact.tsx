@@ -168,16 +168,16 @@ export const Contact: React.FC = () => {
             </div>
 
             <h3 className="font-sans font-black text-3xl md:text-4xl text-gray-900 tracking-tight">
-              美学留言已成功送达！
+              班级留言已成功送达！
             </h3>
 
             <p className="font-sans text-base md:text-lg text-gray-700 font-extrabold max-w-lg leading-relaxed">
-              嘿 <strong className="text-pink-600 underline decoration-yellow-400 decoration-3">{name}</strong>！您的项目诉求已经被妥善打包，并飞速寄送到了 Zainab 的好评收件箱 ({email})。她已经开始烧热水准备给您回信啦！
+              嘿 <strong className="text-pink-600 underline decoration-yellow-400 decoration-3">{name}</strong>！您的留言已经被妥善打包，并飞速寄送到了周末4班班级邮箱 ({email})。我们会尽快给您回复！
             </p>
 
             <div className="bg-[#FFF5D2] border-2 border-black rounded-xl p-4 shadow-[2px_2px_0_0_#000] max-w-sm rotate-[-2deg]">
               <span className="font-mono text-xs text-amber-800 font-bold block">
-                ZAINAB 平均时间响应估算:
+                班级留言平均响应估算:
               </span>
               <span className="font-sans font-black text-xl text-black">
                 最多 12 至 15 分钟内 🕒
