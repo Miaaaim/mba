@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navigation } from "./components/Navigation";
 import { Hero } from "./components/Hero";
 import { Ticker } from "./components/Ticker";
@@ -13,6 +13,11 @@ import { Footer } from "./components/Footer";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("hero");
+
+  // 确保页面首次加载时滚动到顶部
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleScrollTo = (sectionId: string) => {
     setActiveTab(sectionId);
