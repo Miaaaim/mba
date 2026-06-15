@@ -89,6 +89,8 @@ export const Classmates: React.FC = () => {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   // Number of cards to show in grid mode initially
   const [visibleCount, setVisibleCount] = useState(getInitialVisibleCount);
+  // Number of rows to show in list mode initially (default 8)
+  const [listVisibleCount, setListVisibleCount] = useState(8);
   const [isMobileViewport, setIsMobileViewport] = useState(getIsMobileViewport);
 
   useEffect(() => {
@@ -590,8 +592,9 @@ export const Classmates: React.FC = () => {
         </>
       ) : (
         /* List View */
-        <div className="flex flex-col gap-3 animate-in fade-in duration-300">
-          {filteredClassmates.map((member) => (
+        <>
+          <div className="flex flex-col gap-3 animate-in fade-in duration-300">
+            {filteredClassmates.slice(0, listVisibleCount).map((member) => (
             <div
               key={member.id}
               onClick={() => setSelectedClassmate(member)}
@@ -669,8 +672,31 @@ export const Classmates: React.FC = () => {
 
               <ArrowRight className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 md:hidden" />
             </div>
-          ))}
-        </div>
+            ))}
+          </div>
+
+          {/* Load More Button Container for List View */}
+          {filteredClassmates.length > listVisibleCount && (
+            <div className="mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in duration-300">
+              {!isMobileViewport && (
+                <button
+                  onClick={() => setListVisibleCount(prev => prev + 8)}
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#A1FC3A] hover:bg-[#8ee031] border-2 border-black rounded-xl font-sans text-sm font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer"
+                >
+                  加载更多同学 ⚡ (+8)
+                </button>
+              )}
+              <button
+                onClick={() => setListVisibleCount(filteredClassmates.length)}
+                className="w-full sm:w-auto px-6 py-3.5 bg-white hover:bg-gray-50 border-2 border-black rounded-xl font-sans text-xs font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer text-gray-700"
+              >
+                {isMobileViewport
+                  ? `查看全部 (${filteredClassmates.length} 人)`
+                  : `直接显示全部 (${filteredClassmates.length} 人)`}
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {/* --- CLASSMATE CO-CREATION MODAL POPUP --- */}
