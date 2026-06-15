@@ -568,8 +568,8 @@ export const Classmates: React.FC = () => {
             ))}
           </div>
 
-          {/* Load More Button Container */}
-          {filteredClassmates.length > visibleCount && (
+          {/* Load More / Collapse Button Container */}
+          {filteredClassmates.length > visibleCount ? (
             <div className="mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in duration-300">
               {!isMobileViewport && (
                 <button
@@ -588,7 +588,16 @@ export const Classmates: React.FC = () => {
                   : `直接显示全部 (${filteredClassmates.length} 人)`}
               </button>
             </div>
-          )}
+          ) : filteredClassmates.length === visibleCount && visibleCount > getInitialVisibleCount() ? (
+            <div className="mt-10 text-center animate-in fade-in duration-300">
+              <button
+                onClick={() => setVisibleCount(getInitialVisibleCount())}
+                className="px-6 py-3.5 bg-white hover:bg-gray-50 border-2 border-black rounded-xl font-sans text-xs font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer text-gray-700"
+              >
+                收起 ▲
+              </button>
+            </div>
+          ) : null}
         </>
       ) : (
         /* List View */
@@ -675,8 +684,8 @@ export const Classmates: React.FC = () => {
             ))}
           </div>
 
-          {/* Load More Button Container for List View */}
-          {filteredClassmates.length > listVisibleCount && (
+          {/* Load More / Collapse Button Container for List View */}
+          {filteredClassmates.length > listVisibleCount ? (
             <div className="mt-10 text-center flex flex-col sm:flex-row items-center justify-center gap-4 animate-in fade-in duration-300">
               {!isMobileViewport && (
                 <button
@@ -695,7 +704,16 @@ export const Classmates: React.FC = () => {
                   : `直接显示全部 (${filteredClassmates.length} 人)`}
               </button>
             </div>
-          )}
+          ) : filteredClassmates.length === listVisibleCount && listVisibleCount > 8 ? (
+            <div className="mt-10 text-center animate-in fade-in duration-300">
+              <button
+                onClick={() => setListVisibleCount(8)}
+                className="px-6 py-3.5 bg-white hover:bg-gray-50 border-2 border-black rounded-xl font-sans text-xs font-black shadow-[4px_4px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[2px_2px_0_0_#000] transition-all cursor-pointer text-gray-700"
+              >
+                收起 ▲
+              </button>
+            </div>
+          ) : null}
         </>
       )}
 
