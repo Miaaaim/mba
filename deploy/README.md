@@ -19,7 +19,7 @@ VS Code (本地开发)
     ↓ git push
 GitHub (代码仓库)
     ↓ GitHub Actions 自动触发
-自动构建 (npm ci → npm run build)
+自动构建 (npm ci --include=optional → npm run build:cloud)
     ↓ SCP 上传
 腾讯云服务器 (/var/www/mba-site/dist)
     ↓ 原子切换
@@ -294,8 +294,8 @@ sudo systemctl status sshd
 
 ```bash
 # 本地模拟构建
-npm ci
-npm run build
+npm ci --include=optional
+npm run build:cloud
 ```
 
 ---
