@@ -443,7 +443,7 @@ export const CareerTimeline: React.FC = () => {
             </div>
 
             {/* Sketched sticker decoration branding stamp */}
-            <div className="hidden sm:block absolute bottom-6 right-6 p-2 rounded-lg border-2 border-black font-mono text-xs font-black bg-yellow-300 shadow-[3px_3px_0px_#000] rotate-3 select-none">
+            <div className="hidden sm:block absolute bottom-3 right-6 p-2 rounded-lg border-2 border-black font-mono text-xs font-black bg-yellow-300 shadow-[3px_3px_0px_#000] rotate-3 select-none">
               🎯 ZJU MBA MENTOR BOARD
             </div>
 
