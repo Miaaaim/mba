@@ -15,6 +15,8 @@ export interface Classmate {
   photo: string; // Image path if present, otherwise empty
   fallbackEmoji: string; // Emoji character for visual fallback
   bgColor: string; // Custom pastel card background color
+  photoOffsetY?: string; // Vertical position adjustment for photo (e.g., "top", "30%")
+  photoOffsetX?: string; // Horizontal position adjustment for photo (e.g., "left", "70%")
 }
 
 const BG_COLORS = [
@@ -102,7 +104,8 @@ export function generateClassmates(): Classmate[] {
       tagsText: "修行，体验，创新，自定义",
       MBTI: "",
       photo: "contact-photos/user_003.jpg",
-      fallbackEmoji: "🍳"
+      fallbackEmoji: "🍳",
+      photoOffsetY: "20%"
     },
     {
       id: "user-005",
@@ -306,7 +309,8 @@ export function generateClassmates(): Classmate[] {
       tagsText: "ESTJ/金牛座",
       MBTI: "",
       photo: "contact-photos/user_021.jpg",
-      fallbackEmoji: "⛺"
+      fallbackEmoji: "⛺",
+      photoOffsetY: "15%"
     },
     {
       id: "user-022",
@@ -408,7 +412,8 @@ export function generateClassmates(): Classmate[] {
       tagsText: "ENFP、创业一年",
       MBTI: "",
       photo: "contact-photos/user_029.jpg",
-      fallbackEmoji: "⚡"
+      fallbackEmoji: "⚡",
+      photoOffsetY: "30%"
     },
     {
       id: "user-030",
@@ -663,7 +668,9 @@ export function generateClassmates(): Classmate[] {
       tagsText: "物产中大人、物流人、INFJ",
       MBTI: "",
       photo: "contact-photos/user_049.png",
-      fallbackEmoji: "📦"
+      fallbackEmoji: "📦",
+      photoOffsetY: "15%",
+      photoOffsetX: "40%"
     },
     {
       id: "user-052",
@@ -731,7 +738,8 @@ export function generateClassmates(): Classmate[] {
       tagsText: "猫奴",
       MBTI: "",
       photo: "contact-photos/user_055.jpg",
-      fallbackEmoji: "🐱"
+      fallbackEmoji: "🐱",
+      photoOffsetY: "15%"
     },
     {
       id: "user-056",

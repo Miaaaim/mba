@@ -675,6 +675,7 @@ export const Classmates: React.FC = () => {
                       alt={member.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover"
+                      style={{ objectPosition: `${member.photoOffsetX || 'center'} ${member.photoOffsetY || 'center'}` }}
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         const fallbackEl = e.currentTarget.nextElementSibling as HTMLElement;
@@ -781,6 +782,7 @@ export const Classmates: React.FC = () => {
                       src={getPhotoUrl(member.photo)}
                       alt={member.name}
                       className="w-full h-full object-cover"
+                      style={{ objectPosition: `${member.photoOffsetX || 'center'} ${member.photoOffsetY || 'center'}` }}
                       onError={(e) => {
                         e.currentTarget.style.display = "none";
                         const fallbackEl = e.currentTarget.nextElementSibling as HTMLElement;
@@ -918,6 +920,7 @@ export const Classmates: React.FC = () => {
                     alt={selectedClassmate.name}
                     referrerPolicy="no-referrer"
                     className="w-full h-full object-cover"
+                    style={{ objectPosition: `${selectedClassmate.photoOffsetX || 'center'} ${selectedClassmate.photoOffsetY || 'center'}` }}
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       const fallbackEl = e.currentTarget.nextElementSibling as HTMLElement;
