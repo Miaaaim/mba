@@ -679,7 +679,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "遇见更好的自己",
       tagsText: "大丰演艺人、舞台科技专家",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_052.png",
       fallbackEmoji: "🎭"
     },
     {
