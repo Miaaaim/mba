@@ -62,7 +62,7 @@ export const CareerTimeline: React.FC = () => {
     {
       id: "zhongyuan",
       name: "仲原 (仲仲)",
-      role: "学长",
+      role: "学姐",
       color: "bg-[#FFE2F2]",
       badgeBg: "bg-pink-600 text-white",
       borderBg: "border-[#9D174D]",
