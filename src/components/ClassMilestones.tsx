@@ -11,7 +11,8 @@ import {
   GraduationCap,
   ChevronLeft,
   ChevronRight,
-  Sparkles
+  Sparkles,
+  Music
 } from "lucide-react";
 
 interface Milestone {
@@ -27,6 +28,22 @@ export const ClassMilestones: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const milestones: Milestone[] = [
+    {
+      date: "2026年6月28日",
+      title: "数创音乐节",
+      desc: "创意与音符的碰撞，同学们在音乐与科技的交融中感受浙大的活力与魅力，留下了难忘的夏日记忆。",
+      icon: <Music className="w-5 h-5 text-cyan-700" />,
+      color: "bg-[#CFFAFE] border-[#155E75]",
+      badgeText: "夏日狂欢"
+    },
+    {
+      date: "2026年6月28日",
+      title: "新生见面会",
+      desc: "初次线下相聚，从屏幕走向现实，一张张熟悉又陌生的笑脸终于对上了名字和面容，MBA之旅正式拉开帷幕。",
+      icon: <Sparkles className="w-5 h-5 text-amber-700" />,
+      color: "bg-[#FFF5D2] border-[#B45309]",
+      badgeText: "初次相聚"
+    },
     {
       date: "2026年5月30日",
       title: "班级群成立，全员线上见面会",
