@@ -17,26 +17,21 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
           <div className="w-full h-full relative flex flex-col items-center justify-center bg-[#E2DEFF] p-4 sm:p-6 transition-all duration-300">
             {/* Header/Status */}
             <div className="absolute top-4 left-4 font-mono text-[9px] text-[#5B21B6] border border-[#5B21B6] px-1.5 py-0.5 rounded bg-white font-bold">
-              moments_welcome.png ✨
+              moments_welcome.jpg ✨
             </div>
             <div className="absolute top-4 right-4 text-xs font-bold bg-[#A3E635] px-2 py-0.5 border-2 border-black rounded shadow-[2px_2px_0px_#000000]">
-              待补充 📷
+              已上传 ✅
             </div>
             
             {/* Polaroid frame inside */}
             <div className="w-9/12 sm:w-10/12 md:w-11/12 max-w-[360px] sm:max-w-[420px] md:max-w-[460px] bg-white border-2 sm:border-2.5 border-black p-2 sm:p-3 md:p-3.5 pb-4 sm:pb-6 md:pb-8 rounded-lg rotate-[-2deg] shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] sm:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] md:shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] mt-4">
-              {/* Image box placeholder */}
-              <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] flex flex-col items-center justify-center relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-tr from-black/5 to-transparent" />
-                
-                {/* Visual camera icon with pending hint */}
-                <span className="text-4xl sm:text-5xl animate-bounce">👋</span>
-                <span className="font-mono text-[10px] sm:text-[11px] font-bold text-gray-400 mt-2">PHOTO PLACEHOLDER</span>
-                
-                {/* Pending overlay sticker */}
-                <div className="absolute top-2 right-2 bg-rose-500 text-white font-black text-[10px] border border-black px-1.5 py-0.5 rounded rotate-12 shadow-[1px_1px_0_0_#000]">
-                  待补充 ✨
-                </div>
+              {/* Real photo */}
+              <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] relative overflow-hidden">
+                <img 
+                  src="/photos/moments_welcome.JPG" 
+                  alt="新生见面会" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="mt-4 text-center">
                 <p className="font-sans font-black text-base text-gray-800">👋 新生见面会记录</p>
@@ -44,8 +39,8 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
               </div>
             </div>
 
-            <div className="font-sans text-[11px] bg-white border-2 border-black py-1 px-3 rounded-full font-extrabold shadow-[2px_2px_0px_#000000] rotate-[2deg] mt-4 flex items-center gap-1.5 text-[#5B21B6] animate-pulse">
-              <span>🌟 "期待开学合影，留下我们的笑脸！"</span>
+            <div className="font-sans text-[11px] bg-white border-2 border-black py-1 px-3 rounded-full font-extrabold shadow-[2px_2px_0px_#000000] rotate-[2deg] mt-4 flex items-center gap-1.5 text-[#5B21B6]">
+              <span>🌟 "初次相遇，未来同行的快乐起点！"</span>
             </div>
           </div>
         );
