@@ -9,6 +9,7 @@ type HeroTab = "icebreaker" | "welcome" | "first_class";
 
 export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
   const [activeTab, setActiveTab] = useState<HeroTab>("icebreaker");
+  const welcomePhotoSrc = `${import.meta.env.BASE_URL}photos/moments_welcome.JPG`;
 
   const renderPhotoPlaceholder = () => {
     switch (activeTab) {
@@ -17,7 +18,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
           <div className="w-full h-full relative flex flex-col items-center justify-center bg-[#E2DEFF] p-4 sm:p-6 transition-all duration-300">
             {/* Header/Status */}
             <div className="absolute top-4 left-4 font-mono text-[9px] text-[#5B21B6] border border-[#5B21B6] px-1.5 py-0.5 rounded bg-white font-bold">
-              moments_welcome.jpg ✨
+              moments_welcome.JPG ✨
             </div>
             <div className="absolute top-4 right-4 text-xs font-bold bg-[#A3E635] px-2 py-0.5 border-2 border-black rounded shadow-[2px_2px_0px_#000000]">
               已上传 ✅
@@ -28,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({ onSeePortfolio }) => {
               {/* Real photo */}
               <div className="aspect-[4/3] w-full border-2 border-black bg-[#FCFBF4] relative overflow-hidden">
                 <img 
-                  src="/photos/moments_welcome.JPG" 
+                  src={welcomePhotoSrc}
                   alt="新生见面会" 
                   className="w-full h-full object-cover"
                 />
