@@ -169,7 +169,7 @@ export function generateClassmates(): Classmate[] {
       companyTitle: "医疗公司 总助",
       experience: "教培上市公司分公司销售总监、国企分公司总助兼项目负责人",
       canHelp: "投融资、创新产品及首台套申报",
-      futureExpectation: "学习创新创业思维，与各位老师 and / & 同学多多交流学习",
+      futureExpectation: "学习创新创业思维，与各位老师和同学多多交流学习",
       tagsText: "ISTJ 开荒型选手",
       MBTI: "",
       photo: "contact-photos/user_009.jpg",
@@ -261,6 +261,23 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🦁"
     },
     {
+      id: "user-017",
+      name: "王倩悦",
+      className: "周末四班",
+      hometown: "浙江余姚",
+      currentCity: "浙江杭州",
+      contact: "17816878119",
+      hobbies: "旅游",
+      companyTitle: "农本咨询规划总监",
+      experience: "",
+      canHelp: "",
+      futureExpectation: "",
+      tagsText: "",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🌷"
+    },
+    {
       id: "user-018",
       name: "黄旭",
       className: "周末四班",
@@ -276,6 +293,23 @@ export function generateClassmates(): Classmate[] {
       MBTI: "",
       photo: "contact-photos/user_018.jpg",
       fallbackEmoji: "📖"
+    },
+    {
+      id: "user-019",
+      name: "王家芷",
+      className: "周末四班",
+      hometown: "浙江台州",
+      currentCity: "浙江台州",
+      contact: "13736207822",
+      hobbies: "动漫、游戏、手工、唱歌",
+      companyTitle: "台州电信、综合支撑",
+      experience: "招投标项目支撑及综合管理",
+      canHelp: "招投标相关技巧、政企侧智能化建设交流",
+      futureExpectation: "保持成长与热爱，过好每一天",
+      tagsText: "ENFP、水象",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🎮"
     },
     {
       id: "user-020",
@@ -330,6 +364,23 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🦋"
     },
     {
+      id: "user-023",
+      name: "石汉章",
+      className: "周末四班",
+      hometown: "浙江安吉",
+      currentCity: "杭州、德清、安吉三地",
+      contact: "18757209866",
+      hobbies: "足球，五月天",
+      companyTitle: "浦发德清支行行长",
+      experience: "工行安吉支行、浦发安吉支行",
+      canHelp: "“金融＋科技产业生态圈”，投融资、收并购、跨境结算方案、办公家具原厂渠道",
+      futureExpectation: "生态扩圈，朋友扩表，知识扩列",
+      tagsText: "金融科技生态圈建立者，思维天马",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🏦"
+    },
+    {
       id: "user-024",
       name: "梁子晴",
       className: "周末四班",
@@ -345,6 +396,23 @@ export function generateClassmates(): Classmate[] {
       MBTI: "",
       photo: "contact-photos/user_024.jpg",
       fallbackEmoji: "🍵"
+    },
+    {
+      id: "user-027",
+      name: "许瑞婷",
+      className: "周末4班",
+      hometown: "山西临汾",
+      currentCity: "浙江杭州",
+      contact: "15827109925",
+      hobbies: "自驾游、普拉提",
+      companyTitle: "丹纳赫生命科学，销售",
+      experience: "生命科学行业疾病模型、药物研发到生产全流程方案",
+      canHelp: "集团属于行业头部，各opco之间的完整链条，可以提供制药、临床等最新的行业视角及研究方案",
+      futureExpectation: "与本行业的技术人员有更深入的交流，以及不同行业之间的火花碰撞",
+      tagsText: "极端两极分化的双子座",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🧪"
     },
     {
       id: "user-025",
@@ -450,18 +518,35 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🍚"
     },
     {
+      id: "user-032",
+      name: "陈玲",
+      className: "周末四班",
+      hometown: "辽宁省阜新市",
+      currentCity: "浙江省杭州市",
+      contact: "1514259469",
+      hobbies: "绘画、动漫",
+      companyTitle: "启慧管理咨询、创业者",
+      experience: "12年人资+2年管理咨询",
+      canHelp: "职业规划、组织诊断及解决",
+      futureExpectation: "破界、体系、精进",
+      tagsText: "INTP、天蝎、无法定义",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🎨"
+    },
+    {
       id: "user-033",
       name: "石雨弘",
       className: "周末4班",
       hometown: "安徽蚌埠",
       currentCity: "浙江杭州拱墅区",
       contact: "13216818215",
-      hobbies: "健身游泳、阅读、唱歌、拉丁舞、旅行、麻将",
-      companyTitle: "荣耀终端股份有限公司 中国区电商部天猫渠道经理",
-      experience: "曾任职华为技术有限公司；本科毕业于浙江传媒学院",
+      hobbies: "健身游泳、阅读、唱歌、拉丁舞、旅行",
+      companyTitle: "荣耀终端股份有限公司 中国区电商渠道经理",
+      experience: "华为技术有限公司；本科浙江传媒学院",
       canHelp: "消费电子行业资源、传媒行业资源对接与经验分享",
       futureExpectation: "珍惜校园求学时光，提升管理认知，和同窗们交流共进，奔赴各自职业理想。",
-      tagsText: "INFJ可切换E、我的风格是没有固定风格、风一样的水瓶座",
+      tagsText: "INFJ可切换E、风一样的水瓶座",
       MBTI: "",
       photo: "contact-photos/user_033.jpg",
       fallbackEmoji: "📱"
@@ -586,6 +671,40 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🐏"
     },
     {
+      id: "user-041",
+      name: "鲁杭辰",
+      className: "周末四班",
+      hometown: "浙江杭州",
+      currentCity: "杭州",
+      contact: "18651626383",
+      hobbies: "各种游戏、打牌",
+      companyTitle: "杭州心悦爱玩科技有限公司，游戏策划",
+      experience: "美国哥大留学、ifind产品经理",
+      canHelp: "游戏推荐",
+      futureExpectation: "结识更多伙伴、学习AI、学习管理",
+      tagsText: "",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🎮"
+    },
+    {
+      id: "user-042",
+      name: "黄鑫",
+      className: "周末四班",
+      hometown: "浙江杭州",
+      currentCity: "浙江杭州",
+      contact: "18806518160",
+      hobbies: "剧本杀骑行桌游",
+      companyTitle: "浙商保险技术",
+      experience: "IDC",
+      canHelp: "酒类、保险类购买折扣",
+      futureExpectation: "和优秀的人共同学习成长、顺利毕业",
+      tagsText: "ENFP/INFP技术转行中雄关漫道真如铁，而今迈步从头越。",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "🛡️"
+    },
+    {
       id: "user-044",
       name: "谢祥",
       className: "周末4班",
@@ -620,6 +739,23 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🎥"
     },
     {
+      id: "user-046",
+      name: "叶征源",
+      className: "周末4班",
+      hometown: "浙江温州",
+      currentCity: "浙江杭州",
+      contact: "15905778889",
+      hobbies: "网球，健身",
+      companyTitle: "杭州移动政企解决方案经理",
+      experience: "毕业即入职移动",
+      canHelp: "",
+      futureExpectation: "",
+      tagsText: "",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "📡"
+    },
+    {
       id: "user-047",
       name: "许旺",
       className: "周末4班",
@@ -646,7 +782,7 @@ export function generateClassmates(): Classmate[] {
       hobbies: "旅游 猫狗 探店",
       companyTitle: "浙江省国际贸易集团供应链有限公司综合办公室",
       experience: "2025年赴省商务厅挂职锻炼，全程协助统筹全省出口管制大会组织工作，同时配合完成上海进博会浙江省交易团各项保障与服务事宜",
-      canHelp: "省商务厅或省外贸体制流程引荐协作",
+      canHelp: "",
       futureExpectation: "希望能结交各行各业小伙伴，交流工作经验，组队打卡演唱会，拓展有趣人脉",
       tagsText: "ENFP",
       MBTI: "",
@@ -673,18 +809,35 @@ export function generateClassmates(): Classmate[] {
       photoOffsetX: "40%"
     },
     {
+      id: "user-050",
+      name: "王腾䶮",
+      className: "周末4班",
+      hometown: "浙江杭州",
+      currentCity: "浙江杭州",
+      contact: "15858223032",
+      hobbies: "游泳、滑雪、骑行",
+      companyTitle: "阿里云诚云科技技术内容专家",
+      experience: "华为/吉利/阿里三大体系牛马",
+      canHelp: "云原生系统架构从入门到放弃、一行代码也不用自己写全部交给Claude式编程",
+      futureExpectation: "参与AI在行业中的实际落地项目",
+      tagsText: "海归/技术不宅/AI浓度五个9/猫托车骑手",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "☁️"
+    },
+    {
       id: "user-052",
       name: "尹海娜",
       className: "周末4班",
       hometown: "湖南株洲",
       currentCity: "宁波/杭州",
       contact: "15669221983",
-      hobbies: "安静、赚钱、古筝",
+      hobbies: "安静、赚钱",
       companyTitle: "浙江大丰实业股份有限公司",
       experience: "轨交板块研发中心总经理/特装事业部总经理",
       canHelp: "分享轨道交通、特种观光装备行业项目操盘、研发管理经验；提供高端装备项目落地、资质申报、市场拓展实战经验；对接轨交、文旅特种装备产业资源与人脉",
       futureExpectation: "遇见更好的自己",
-      tagsText: "大丰演艺人、舞台科技专家",
+      tagsText: "高级工程师，一级建造师，中国机械工程学会标准组专家",
       MBTI: "",
       photo: "contact-photos/user_052.png",
       fallbackEmoji: "🎭"
@@ -750,7 +903,7 @@ export function generateClassmates(): Classmate[] {
       contact: "17750782105",
       hobbies: "创业、各类运动（羽毛球优先）",
       companyTitle: "浙江工商大学-培训部主任",
-      experience: "教培6年-销售总监、IP老师",
+      experience: "创业新人、教培6年-销售总监、IP老师",
       canHelp: "高校资源、大学生资源、各种培训",
       futureExpectation: "完善自己的项目、加入更多不同的项目，有创业的咱们都可以加一下",
       tagsText: "创业、运动、自媒体IP",
@@ -795,16 +948,16 @@ export function generateClassmates(): Classmate[] {
     {
       id: "user-061",
       name: "郑傲楠",
-      className: "周末4班",
+      className: "周末四班",
       hometown: "新疆",
       currentCity: "杭州",
       contact: "18158137959",
-      hobbies: "户外运动、马拉松、钓鱼、篮球、户外野炊",
-      companyTitle: "杭州海康威视，户外产品营销&技术",
-      experience: "曾做IC红外芯片 To B 集成开发和项目经理，近年聚焦户外产品（钓鱼、热成像打猎）相关 To C 的营销与技术工作。",
-      canHelp: "可交流户外装备与场景化体验，包括钓鱼设备（打窝船、声呐等）和热成像设备应用。",
-      futureExpectation: "希望给更多户外爱好者带来体验和探索新乐趣，让小众走向大众。",
-      tagsText: "海康威视、户外产品、钓鱼装备、热成像",
+      hobbies: "我喜欢户外运动，马拉松、钓鱼、篮球、户外野炊，我有各种户外的探索设备、钓鱼设备（打窝船、声呐等等）、热成像瞄具等等，希望能够给更多户外爱好者来体验和探索新的乐趣，让小众走向大众。",
+      companyTitle: "我目前在杭州海康威视工作，之前做过IC红外芯片To B的集成开发和项目经理，近年在做户外产品（钓鱼、热成像打猎）相关To C的营销&技术工作。",
+      experience: "",
+      canHelp: "",
+      futureExpectation: "",
+      tagsText: "热情、喜欢在交流中成长",
       MBTI: "",
       photo: "contact-photos/user_061.png",
       fallbackEmoji: "🎣"
@@ -845,24 +998,41 @@ export function generateClassmates(): Classmate[] {
     }
   ];
 
-  return rawList.map((item, index) => {
-    let city = item.currentCity ? item.currentCity.trim() : "";
-    if (
-      city === "浙江杭州" || 
-      city === "杭州萧山" || 
-      city === "杭州" ||
-      city === "浙江省杭州拱墅区" || 
-      city === "浙江省杭州市拱墅区" ||
-      city === "浙江杭州拱墅区" ||
-      city === "浙江省杭州市" ||
-      city === "浙江杭州市"
-    ) {
-      city = "杭州";
-    } else if (city === "浙江温州" || city === "温州") {
-      city = "温州";
-    } else if (city === "浙江宁波" || city === "宁波") {
-      city = "宁波";
+  function normalizeCurrentCity(city: string): string {
+    const trimmedCity = city.trim();
+
+    const exactCityMap: Record<string, string> = {
+      "浙江杭州": "杭州",
+      "杭州萧山": "杭州",
+      "杭州": "杭州",
+      "浙江省杭州拱墅区": "杭州",
+      "浙江省杭州市拱墅区": "杭州",
+      "浙江杭州拱墅区": "杭州",
+      "浙江省杭州市": "杭州",
+      "浙江杭州市": "杭州",
+      "浙江温州": "温州",
+      "温州": "温州",
+      "浙江宁波": "宁波",
+      "宁波": "宁波"
+    };
+
+    if (exactCityMap[trimmedCity]) {
+      return exactCityMap[trimmedCity];
     }
+
+    if (trimmedCity.startsWith("浙江省")) {
+      return trimmedCity.slice("浙江省".length).trim();
+    }
+
+    if (trimmedCity.startsWith("浙江")) {
+      return trimmedCity.slice("浙江".length).trim();
+    }
+
+    return trimmedCity;
+  }
+
+  return rawList.map((item, index) => {
+    let city = item.currentCity ? normalizeCurrentCity(item.currentCity) : "";
 
     let home = item.hometown ? item.hometown.trim() : "";
     if (
