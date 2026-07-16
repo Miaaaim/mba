@@ -70,7 +70,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
                 : "text-gray-800 hover:bg-yellow-100"
             }`}
           >
-            周末4班 🎓
+            26级周末4班 🎓
           </button>
 
           <button
