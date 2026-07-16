@@ -91,15 +91,21 @@ export const Footer: React.FC<FooterProps> = ({ onScrollTo }) => {
       </div>
 
       {/* Under copyright bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-gray-400/30 text-xs font-mono text-gray-400 font-semibold">
-        <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-black" />
-          <span>如有内容问题，可联系圆圆修改</span>
+      <div className="pt-6 border-t border-gray-400/30 text-xs font-mono text-gray-400 font-semibold">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-2">
+            <Award className="w-4 h-4 text-black" />
+            <span>如有内容问题，可联系圆圆修改</span>
+          </div>
+
+          <div className="flex items-center gap-1">
+            <Globe className="w-3.5 h-3.5" />
+            <span>基于 React、Tailwind CSS 与手绘趣味涂鸦精心设计及程序编写。</span>
+          </div>
         </div>
-        
-        <div className="flex items-center gap-1">
-          <Globe className="w-3.5 h-3.5" />
-          <span>基于 React、Tailwind CSS 与手绘趣味涂鸦精心设计及程序编写。</span>
+
+        <div className="mt-4 text-center text-[11px] tracking-wide text-gray-500">
+          浙ICP备2026038482号
         </div>
       </div>
 
