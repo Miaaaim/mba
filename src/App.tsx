@@ -10,6 +10,7 @@ import { Portfolio } from "./components/Portfolio";
 import { Testimonials } from "./components/Testimonials";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { LearningSection } from "./components/LearningSection";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("hero");
@@ -73,6 +74,11 @@ export default function App() {
 
         {/* Let's design something / Custom forms (Temporarily hidden) */}
         {/* <Contact /> */}
+
+        {/* 学习板块：前置课程笔记 & 学习资料入口 */}
+        <div id="learning" className="w-full bg-white border-t-3 border-black py-8">
+          <LearningSection />
+        </div>
 
       </main>
 

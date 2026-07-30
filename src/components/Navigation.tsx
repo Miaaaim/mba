@@ -7,7 +7,7 @@ interface NavigationProps {
 
 export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
   const [activeSection, setActiveSection] = useState<string>("hero");
-  const sectionIds = ["hero", "classmates", "career", "milestones", "testimonials"];
+  const sectionIds = ["hero", "classmates", "career", "milestones", "testimonials", "learning"];
 
   useEffect(() => {
     const updateActiveSectionFromScroll = () => {
@@ -108,13 +108,24 @@ export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
 
           <button
             onClick={() => handleNavClick("testimonials")}
-            className={`${tabBaseClass} last:border-r-0 ${
+            className={`${tabBaseClass} ${
               activeSection === "testimonials"
                 ? "bg-pink-100 text-black shadow-[inset_0_-3px_0_0_rgba(0,0,0,1)]"
                 : "text-gray-800 hover:bg-pink-100"
             }`}
           >
             留言板 💬
+          </button>
+
+          <button
+            onClick={() => handleNavClick("learning")}
+            className={`${tabBaseClass} last:border-r-0 ${
+              activeSection === "learning"
+                ? "bg-[#E2DEFF] text-black shadow-[inset_0_-3px_0_0_rgba(0,0,0,1)]"
+                : "text-gray-800 hover:bg-[#E2DEFF]"
+            }`}
+          >
+            学习资料 📚
           </button>
         </div>
 
