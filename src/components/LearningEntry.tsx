@@ -1,13 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { BookOpen, Clock } from 'lucide-react';
 
-interface LearningEntryProps {
-  onEnterPreCourse: () => void;
-}
-
-export const LearningEntry: React.FC<LearningEntryProps> = ({
-  onEnterPreCourse,
-}) => {
+export const LearningEntry: React.FC = () => {
   return (
     <div className="w-full max-w-5xl mx-auto px-4 py-12">
       {/* 标题区 */}
@@ -23,9 +18,9 @@ export const LearningEntry: React.FC<LearningEntryProps> = ({
       {/* 入口卡片区 */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* ─── 前置课程学习资料（可点击） ─── */}
-        <button
-          onClick={onEnterPreCourse}
-          className="group relative bg-white border-3 border-black rounded-2xl p-6 md:p-8 text-left
+        <Link
+          to="/learning"
+          className="group relative bg-white border-3 border-black rounded-2xl p-6 md:p-8 text-left block
                      shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]
                      hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]
                      hover:translate-x-[4px] hover:translate-y-[4px]
@@ -70,7 +65,7 @@ export const LearningEntry: React.FC<LearningEntryProps> = ({
                           flex items-center justify-center rotate-12 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
             <span className="text-xs font-black -rotate-12">📖</span>
           </div>
-        </button>
+        </Link>
 
         {/* ─── 期待更多内容（置灰不可点击） ─── */}
         <div

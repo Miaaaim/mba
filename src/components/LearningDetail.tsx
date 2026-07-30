@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CourseGroup, LessonMeta } from '../utils/parseLessons';
 import { LessonContent } from './LessonContent';
 import {
@@ -11,7 +12,6 @@ import {
 
 interface LearningDetailProps {
   courses: CourseGroup[];
-  onBack: () => void;
 }
 
 // ─── 单课条目 ──────────────────────────────────────────────────
@@ -176,8 +176,8 @@ const CoursePanel: React.FC<{
 
 export const LearningDetail: React.FC<LearningDetailProps> = ({
   courses,
-  onBack,
 }) => {
+  const navigate = useNavigate();
   const [expandedCourse, setExpandedCourse] = useState<string | null>(null);
   const [expandedLessonId, setExpandedLessonId] = useState<string | null>(null);
   const [activeLessonTab, setActiveLessonTab] = useState<'note' | 'memoryMap'>(
@@ -214,7 +214,7 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
       {/* 顶部栏：返回 + 标题 */}
       <div className="flex items-center gap-4 mb-8">
         <button
-          onClick={onBack}
+          onClick={() => navigate('/')}
           className="flex items-center gap-1.5 px-3 py-2 border-2 border-black rounded-lg bg-white
                      text-sm font-bold text-[#1A3A4A] hover:bg-[#FAF8F2]
                      shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
