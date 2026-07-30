@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { LearningDetail } from '../components/LearningDetail';
 import { useLoadCourses } from '../hooks/useLoadCourses';
-import { ArrowLeft } from 'lucide-react';
 import { useEffect } from 'react';
 
 export default function LearningPage() {
@@ -17,20 +16,7 @@ export default function LearningPage() {
       
       {/* 简洁顶部导航条 */}
       <header className="w-full sticky top-0 z-50 bg-[#FAF8F2]/75 backdrop-blur-md border-b-2 border-[#E8E0D5]">
-        <div className="w-full max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center gap-2 px-3 py-2 border-2 border-black rounded-lg bg-white
-                       text-sm font-bold text-[#1A3A4A] hover:bg-[#FAF8F2]
-                       shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]
-                       hover:shadow-[1px_1px_0px_0px_rgba(0,0,0,1)]
-                       hover:translate-x-[1px] hover:translate-y-[1px]
-                       transition-all"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            返回首页
-          </Link>
-
+        <div className="w-full max-w-5xl mx-auto px-4 py-4 flex items-center justify-center">
           <Link
             to="/"
             className="font-mono text-lg font-black tracking-tighter text-black hover:text-[#3A7CA5] transition-colors"

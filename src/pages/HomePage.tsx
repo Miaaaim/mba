@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Navigation } from "../components/Navigation";
 import { Hero } from "../components/Hero";
 import { Ticker } from "../components/Ticker";
@@ -10,11 +11,25 @@ import { LearningSection } from "../components/LearningSection";
 
 export default function HomePage() {
   const [activeTab, setActiveTab] = useState("hero");
+  const location = useLocation();
 
-  // 确保页面首次加载时滚动到顶部
+  // 处理页面滚动：首次加载滚动到顶部，从其他页面跳回时滚动到指定板块
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    const state = location.state as { scrollTo?: string } | null;
+    if (state?.scrollTo) {
+      // 清除 location state 避免重复滚动
+      window.history.replaceState({}, document.title);
+      // 延迟滚动，确保 DOM 渲染完成
+      setTimeout(() => {
+        const element = document.getElementById(state.scrollTo!);
+        if (element) {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+      }, 150);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, []); // 仅在首次挂载时执行
 
   const handleScrollTo = (sectionId: string) => {
     setActiveTab(sectionId);
