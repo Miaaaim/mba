@@ -13,7 +13,7 @@ export const LearningEntry: React.FC<LearningEntryProps> = ({
       {/* 标题区 */}
       <div className="text-center mb-10">
         <h2 className="font-mono text-3xl md:text-4xl font-black text-[#1A3A4A] mb-3">
-          📚 学习板块
+          📚 快乐学习不挂科
         </h2>
         <p className="text-gray-500 text-sm md:text-base">
           课程笔记、知识图谱、学习资料一站汇总
