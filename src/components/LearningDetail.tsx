@@ -8,6 +8,7 @@ import {
   BookOpen,
   BrainCircuit,
   FileText,
+  Layers,
 } from 'lucide-react';
 
 interface LearningDetailProps {
@@ -113,20 +114,25 @@ const CoursePanel: React.FC<{
   isExpanded: boolean;
   expandedLessonId: string | null;
   activeLessonTab: 'note' | 'memoryMap';
+  showKnowledgeSummary: boolean;
   onToggle: () => void;
   onLessonToggle: (lessonId: string) => void;
   onLessonTabChange: (tab: 'note' | 'memoryMap') => void;
+  onToggleKnowledgeSummary: () => void;
 }> = ({
   courseGroup,
   isExpanded,
   expandedLessonId,
   activeLessonTab,
+  showKnowledgeSummary,
   onToggle,
   onLessonToggle,
   onLessonTabChange,
+  onToggleKnowledgeSummary,
 }) => {
   const { course, lessons } = courseGroup;
   const totalMemoryMaps = lessons.filter((l) => l.hasMemoryMap).length;
+  const hasSummary = !!courseGroup.knowledgeSummaryContent;
 
   return (
     <div className="border-3 border-black rounded-xl bg-white overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -144,6 +150,7 @@ const CoursePanel: React.FC<{
           <p className="text-xs text-gray-400">
             {course.teacher} · 共 {lessons.length} 课
             {totalMemoryMaps > 0 && ` · ${totalMemoryMaps} 张记忆图`}
+            {hasSummary && ' · 有知识汇总'}
           </p>
         </div>
         <ChevronDown
@@ -153,19 +160,61 @@ const CoursePanel: React.FC<{
         />
       </button>
 
-      {/* 课节列表 */}
+      {/* 展开内容 */}
       {isExpanded && (
-        <div className="border-t-2 border-[#E8E0D5] p-4 space-y-2 bg-[#FAF8F2]/50">
-          {lessons.map((lesson) => (
-            <LessonItem
-              key={lesson.id}
-              lesson={lesson}
-              isExpanded={expandedLessonId === lesson.id}
-              activeTab={activeLessonTab}
-              onToggle={() => onLessonToggle(lesson.id)}
-              onTabChange={onLessonTabChange}
-            />
-          ))}
+        <div className="border-t-2 border-[#E8E0D5]">
+          {/* 知识汇总 Tab 切换 */}
+          {hasSummary && (
+            <div className="flex border-b-2 border-[#E8E0D5] bg-[#FAF8F2]">
+              <button
+                onClick={onToggleKnowledgeSummary}
+                className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold transition-colors ${
+                  !showKnowledgeSummary
+                    ? 'bg-white text-[#1A3A4A] border-b-2 border-[#3A7CA5] -mb-[2px]'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                课节列表
+              </button>
+              <button
+                onClick={onToggleKnowledgeSummary}
+                className={`flex items-center gap-1.5 px-4 py-2 text-xs font-bold transition-colors ${
+                  showKnowledgeSummary
+                    ? 'bg-white text-[#1A3A4A] border-b-2 border-[#3A7CA5] -mb-[2px]'
+                    : 'text-gray-400 hover:text-gray-600'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                知识汇总
+              </button>
+            </div>
+          )}
+
+          {/* 课节列表 或 知识汇总 */}
+          {!showKnowledgeSummary ? (
+            <div className="p-4 space-y-2 bg-[#FAF8F2]/50">
+              {lessons.map((lesson) => (
+                <LessonItem
+                  key={lesson.id}
+                  lesson={lesson}
+                  isExpanded={expandedLessonId === lesson.id}
+                  activeTab={activeLessonTab}
+                  onToggle={() => onLessonToggle(lesson.id)}
+                  onTabChange={onLessonTabChange}
+                />
+              ))}
+            </div>
+          ) : (
+            courseGroup.knowledgeSummaryContent && (
+              <div className="p-4 md:p-6 max-h-[70vh] overflow-y-auto bg-white">
+                <LessonContent
+                  content={courseGroup.knowledgeSummaryContent}
+                  label="📋 知识汇总"
+                />
+              </div>
+            )
+          )}
         </div>
       )}
     </div>
@@ -183,6 +232,9 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
   const [activeLessonTab, setActiveLessonTab] = useState<'note' | 'memoryMap'>(
     'note'
   );
+  const [knowledgeSummaryCourse, setKnowledgeSummaryCourse] = useState<
+    string | null
+  >(null);
 
   const totalLessons = useMemo(
     () => courses.reduce((sum, c) => sum + c.lessons.length, 0),
@@ -199,8 +251,19 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
     [courses]
   );
 
+  const totalSummaries = useMemo(
+    () => courses.filter((c) => c.knowledgeSummaryContent).length,
+    [courses]
+  );
+
   const handleCourseToggle = (courseCode: string) => {
-    setExpandedCourse((prev) => (prev === courseCode ? null : courseCode));
+    if (expandedCourse === courseCode) {
+      setExpandedCourse(null);
+      setKnowledgeSummaryCourse(null);
+    } else {
+      setExpandedCourse(courseCode);
+      setKnowledgeSummaryCourse(null);
+    }
     setExpandedLessonId(null);
   };
 
@@ -210,7 +273,7 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-8">
+    <div className="w-full max-w-6xl mx-auto px-4 py-8">
       {/* 顶部栏：返回 + 标题 */}
       <div className="flex items-center gap-4 mb-8">
         <button
@@ -233,6 +296,7 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
           <p className="text-xs text-gray-400 mt-0.5">
             共 {courses.length} 门课 · {totalLessons} 篇笔记
             {totalMemoryMaps > 0 && ` · ${totalMemoryMaps} 张记忆图`}
+            {totalSummaries > 0 && ` · ${totalSummaries} 份知识汇总`}
           </p>
         </div>
       </div>
@@ -246,11 +310,21 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
             isExpanded={expandedCourse === courseGroup.course.courseCode}
             expandedLessonId={expandedLessonId}
             activeLessonTab={activeLessonTab}
+            showKnowledgeSummary={
+              knowledgeSummaryCourse === courseGroup.course.courseCode
+            }
             onToggle={() =>
               handleCourseToggle(courseGroup.course.courseCode)
             }
             onLessonToggle={handleLessonToggle}
             onLessonTabChange={setActiveLessonTab}
+            onToggleKnowledgeSummary={() =>
+              setKnowledgeSummaryCourse((prev) =>
+                prev === courseGroup.course.courseCode
+                  ? null
+                  : courseGroup.course.courseCode
+              )
+            }
           />
         ))}
       </div>

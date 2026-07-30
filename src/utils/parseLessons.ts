@@ -49,6 +49,8 @@ export interface LessonMeta {
 export interface CourseGroup {
   course: CourseMeta;
   lessons: LessonMeta[];
+  /** 课程知识汇总内容（Markdown） */
+  knowledgeSummaryContent: string | null;
 }
 
 // 课程元数据映射
@@ -147,10 +149,19 @@ export function parseLessons(
   files: Record<string, string>
 ): CourseGroup[] {
   const lessonMap = new Map<string, LessonMeta>();
+  const knowledgeSummaryMap = new Map<string, string>();
 
   // 第一遍：遍历所有文件，建立笔记和记忆图的对应关系
   for (const [path, content] of Object.entries(files)) {
     const filename = path.split('/').pop() || path;
+
+    // 检测知识汇总文件：C001_管理学知识汇总.md
+    const knowledgeMatch = filename.match(/^(C\d{3})_.+知识汇总\.md$/);
+    if (knowledgeMatch) {
+      knowledgeSummaryMap.set(knowledgeMatch[1], content);
+      continue;
+    }
+
     const parsed = parseFilename(filename);
     if (!parsed) continue;
 
@@ -217,6 +228,7 @@ export function parseLessons(
     result.push({
       course: { courseCode: code, ...meta },
       lessons,
+      knowledgeSummaryContent: knowledgeSummaryMap.get(code) || null,
     });
   }
 
