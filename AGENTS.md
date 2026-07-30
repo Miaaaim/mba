@@ -3,11 +3,12 @@
 ## 快速开始
 
 ```bash
-npm install          # 安装依赖
-npm run dev          # 启动开发服务器 → http://localhost:3000
-npm run lint         # TypeScript 类型检查
-npm run build        # 生产构建
-npm run preview      # 预览生产构建
+npm install                 # 安装依赖
+npm run generate:learn-index # 扫描课程 md，生成轻量索引（dev/build 会自动跑）
+npm run dev                 # 启动开发服务器 → http://localhost:3000
+npm run lint                # TypeScript 类型检查
+npm run build               # 生产构建
+npm run preview             # 预览生产构建
 ```
 
 ## 技术栈
@@ -19,7 +20,7 @@ React 19 + TypeScript + Vite 6 + Tailwind CSS v4 + React Router v7 + Motion（�
 - **路由**：`/` → HomePage（单页滚动首页），`/learning` → LearningPage（课程笔记详情）
 - **样式**：粗野主义 + 手绘涂鸦风格，硬阴影 `shadow-[4px_4px_0px_#000]`、微旋转 `rotate-[-2deg]`
 - **同学数据**：硬编码在 `src/data/classmates.ts`，无后端 API
-- **课程数据**：Markdown 文件在 `src/data/learn/`，通过 `import.meta.glob` 动态加载
+- **课程数据**：Markdown 文件在 `src/data/learn/`，构建时生成轻量索引 `src/data/learn-index.json`（标题/摘要）；正文通过 `import.meta.glob` **按需**加载
 - 详细产品需求见 [docs/PRD.md](docs/PRD.md)
 
 ## 关键约定
@@ -43,5 +44,5 @@ Mermaid ~1MB，只能通过 `import()` 动态懒加载，**禁止**同步导入�
 
 1. **线上空白页**：通常是因为 Router basename 与 `BASE_URL` 不匹配，或静态资源用了硬编码绝对路径。检查 `src/App.tsx` 中的 basename 逻辑和所有 `import.meta.env.BASE_URL` 引用。
 2. **部署用 `build:cloud`**：云端环境需 rebuild 原生模块（`@tailwindcss/oxide`、`esbuild`），不要用普通 `build`。
-3. **课程文件命名**：必须匹配 `C{编号}_{序号}_课程名第{N}课_{笔记|记忆图}.md`，否则会被 `parseLessons()` 忽略。
+3. **课程文件命名**：必须匹配 `C{编号}_{序号}_课程名第{N}课_{笔记|记忆图}.md`，否则会被 `buildLearnIndex()` / 索引生成忽略。新增或修改课程 md 后需重新生成索引（`npm run generate:learn-index`，或直接 `npm run dev` / `build`）。
 4. **`@` 别名指向根目录**：`@/src/components/...` 而非 `@/components/...`，不过当前项目统一使用相对路径。

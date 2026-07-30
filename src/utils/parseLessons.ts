@@ -1,5 +1,5 @@
 /**
- * 前置课程笔记文件名解析工具
+ * 前置课程笔记文件名解析与索引工具
  *
  * 文件命名规范：
  *   {课程编号}_{课程序号}_{课程名称}第{N}课_笔记.md
@@ -32,25 +32,44 @@ export interface LessonMeta {
   lessonNo: number;
   /** 课程标题，如 "管理学导论与组织基础" */
   title: string;
-  /** 笔记文件路径（glob import key） */
+  /** 笔记文件名（位于 src/data/learn/） */
   notePath: string;
-  /** 笔记文件原始内容 */
-  noteContent: string;
-  /** 一句话总结（从 Markdown 中提取） */
+  /** 一句话总结（来自预生成索引） */
   summary: string;
   /** 是否有对应的记忆图 */
   hasMemoryMap: boolean;
-  /** 记忆图文件路径（如有） */
+  /** 记忆图文件名（如有） */
   memoryMapPath: string | null;
-  /** 记忆图文件原始内容（如有） */
-  memoryMapContent: string | null;
 }
 
 export interface CourseGroup {
   course: CourseMeta;
   lessons: LessonMeta[];
-  /** 课程知识汇总内容（Markdown） */
-  knowledgeSummaryContent: string | null;
+  /** 是否有知识汇总（正文按需加载） */
+  hasKnowledgeSummary: boolean;
+  /** 知识汇总文件名（如有） */
+  knowledgeSummaryPath: string | null;
+}
+
+/** 预生成的轻量课程索引（不含 Markdown 正文） */
+export interface LearnIndexLesson {
+  id: string;
+  lessonNo: number;
+  title: string;
+  summary: string;
+  noteFile: string;
+  memoryMapFile: string | null;
+}
+
+export interface LearnIndexCourse {
+  courseCode: string;
+  lessons: LearnIndexLesson[];
+  knowledgeSummaryFile: string | null;
+}
+
+export interface LearnIndex {
+  generatedAt: string;
+  courses: LearnIndexCourse[];
 }
 
 // 课程元数据映射
@@ -85,7 +104,7 @@ const COURSE_META: Record<string, Omit<CourseMeta, 'courseCode'>> = {
  * 从 Markdown 内容中提取一句话总结
  * 匹配 "## 一句话总结" 之后的第一个非空段落
  */
-function extractSummary(content: string): string {
+export function extractSummary(content: string): string {
   const lines = content.split('\n');
   let foundHeading = false;
   for (const line of lines) {
@@ -106,7 +125,7 @@ function extractSummary(content: string): string {
 /**
  * 从文件名中解析课程信息
  */
-function parseFilename(filename: string): {
+export function parseFilename(filename: string): {
   courseCode: string;
   lessonNo: number;
   isMemoryMap: boolean;
@@ -127,7 +146,7 @@ function parseFilename(filename: string): {
 /**
  * 从 Markdown H1 中提取课程标题
  */
-function extractTitle(content: string): string {
+export function extractTitle(content: string): string {
   const match = content.match(/^#\s+(.+)$/m);
   if (!match) return '';
 
@@ -141,24 +160,31 @@ function extractTitle(content: string): string {
 }
 
 /**
- * 解析所有课程笔记文件，构建结构化的课程数据
- *
- * @param files - import.meta.glob 导入的所有 .md 文件，key 为路径，value 为 raw 内容
+ * 扫描全部 .md 内容，生成不含正文的轻量索引（供构建脚本使用）
  */
-export function parseLessons(
-  files: Record<string, string>
-): CourseGroup[] {
-  const lessonMap = new Map<string, LessonMeta>();
+export function buildLearnIndex(
+  files: Record<string, string>,
+  generatedAt = new Date().toISOString()
+): LearnIndex {
+  type DraftLesson = {
+    id: string;
+    courseCode: string;
+    lessonNo: number;
+    title: string;
+    summary: string;
+    noteFile: string;
+    memoryMapFile: string | null;
+  };
+
+  const lessonMap = new Map<string, DraftLesson>();
   const knowledgeSummaryMap = new Map<string, string>();
 
-  // 第一遍：遍历所有文件，建立笔记和记忆图的对应关系
   for (const [path, content] of Object.entries(files)) {
     const filename = path.split('/').pop() || path;
 
-    // 检测知识汇总文件：C001_管理学知识汇总.md
     const knowledgeMatch = filename.match(/^(C\d{3})_.+知识汇总\.md$/);
     if (knowledgeMatch) {
-      knowledgeSummaryMap.set(knowledgeMatch[1], content);
+      knowledgeSummaryMap.set(knowledgeMatch[1], filename);
       continue;
     }
 
@@ -169,22 +195,26 @@ export function parseLessons(
     const lessonId = `${courseCode}_${String(lessonNo).padStart(2, '0')}`;
 
     if (isMemoryMap) {
-      // 记忆图：关联到已有的笔记
       const existing = lessonMap.get(lessonId);
       if (existing) {
-        existing.hasMemoryMap = true;
-        existing.memoryMapPath = path;
-        existing.memoryMapContent = content;
+        existing.memoryMapFile = filename;
+      } else {
+        lessonMap.set(lessonId, {
+          id: lessonId,
+          courseCode,
+          lessonNo,
+          title: '',
+          summary: '',
+          noteFile: '',
+          memoryMapFile: filename,
+        });
       }
     } else {
-      // 笔记：创建或更新条目
       const title = extractTitle(content);
       const summary = extractSummary(content);
-
       const existing = lessonMap.get(lessonId);
       if (existing) {
-        existing.notePath = path;
-        existing.noteContent = content;
+        existing.noteFile = filename;
         existing.title = title || existing.title;
         existing.summary = summary || existing.summary;
       } else {
@@ -193,44 +223,72 @@ export function parseLessons(
           courseCode,
           lessonNo,
           title,
-          notePath: path,
-          noteContent: content,
           summary,
-          hasMemoryMap: false,
-          memoryMapPath: null,
-          memoryMapContent: null,
+          noteFile: filename,
+          memoryMapFile: null,
         });
       }
     }
   }
 
-  // 第二遍：按课程分组并排序
-  const courseMap = new Map<string, LessonMeta[]>();
-
+  const courseCodes = new Set<string>();
   for (const lesson of lessonMap.values()) {
-    const list = courseMap.get(lesson.courseCode) || [];
-    list.push(lesson);
-    courseMap.set(lesson.courseCode, list);
+    if (lesson.noteFile) courseCodes.add(lesson.courseCode);
+  }
+  for (const code of knowledgeSummaryMap.keys()) {
+    courseCodes.add(code);
   }
 
-  // 按课程编号排序，课内按课程序号排序
-  const result: CourseGroup[] = [];
-  const sortedCodes = Array.from(courseMap.keys()).sort();
+  const courses: LearnIndexCourse[] = Array.from(courseCodes)
+    .sort()
+    .filter((code) => COURSE_META[code])
+    .map((courseCode) => {
+      const lessons = Array.from(lessonMap.values())
+        .filter((l) => l.courseCode === courseCode && l.noteFile)
+        .sort((a, b) => a.lessonNo - b.lessonNo)
+        .map(({ id, lessonNo, title, summary, noteFile, memoryMapFile }) => ({
+          id,
+          lessonNo,
+          title,
+          summary,
+          noteFile,
+          memoryMapFile,
+        }));
 
-  for (const code of sortedCodes) {
-    const meta = COURSE_META[code];
-    if (!meta) continue;
-
-    const lessons = (courseMap.get(code) || []).sort(
-      (a, b) => a.lessonNo - b.lessonNo
-    );
-
-    result.push({
-      course: { courseCode: code, ...meta },
-      lessons,
-      knowledgeSummaryContent: knowledgeSummaryMap.get(code) || null,
+      return {
+        courseCode,
+        lessons,
+        knowledgeSummaryFile: knowledgeSummaryMap.get(courseCode) || null,
+      };
     });
-  }
 
-  return result;
+  return { generatedAt, courses };
+}
+
+/**
+ * 将预生成索引转为页面可用的 CourseGroup[]（正文字段留空，按需加载）
+ */
+export function courseGroupsFromIndex(index: LearnIndex): CourseGroup[] {
+  return index.courses
+    .map((entry) => {
+      const meta = COURSE_META[entry.courseCode];
+      if (!meta) return null;
+
+      return {
+        course: { courseCode: entry.courseCode, ...meta },
+        lessons: entry.lessons.map((lesson) => ({
+          id: lesson.id,
+          courseCode: entry.courseCode,
+          lessonNo: lesson.lessonNo,
+          title: lesson.title,
+          notePath: lesson.noteFile,
+          summary: lesson.summary,
+          hasMemoryMap: !!lesson.memoryMapFile,
+          memoryMapPath: lesson.memoryMapFile,
+        })),
+        hasKnowledgeSummary: !!entry.knowledgeSummaryFile,
+        knowledgeSummaryPath: entry.knowledgeSummaryFile,
+      } satisfies CourseGroup;
+    })
+    .filter((group): group is CourseGroup => group !== null);
 }

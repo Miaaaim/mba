@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { parseLessons, CourseGroup } from '../utils/parseLessons';
+import { useMemo } from 'react';
+import learnIndex from '../data/learn-index.json';
+import { courseGroupsFromIndex, CourseGroup, LearnIndex } from '../utils/parseLessons';
 
 interface UseLoadCoursesResult {
   courses: CourseGroup[];
@@ -8,39 +9,14 @@ interface UseLoadCoursesResult {
 }
 
 /**
- * 从 import.meta.glob 加载所有课程 .md 文件，解析为 CourseGroup[]
- * 供 LearningSection（入口统计）和 LearningPage（详情内容）复用
+ * 从预生成的 learn-index.json 构建课程列表（不含 Markdown 正文）
+ * 正文在展开课节 / 记忆图 / 知识汇总时按需加载
  */
 export function useLoadCourses(): UseLoadCoursesResult {
-  const [courses, setCourses] = useState<CourseGroup[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const courses = useMemo(
+    () => courseGroupsFromIndex(learnIndex as LearnIndex),
+    []
+  );
 
-  useEffect(() => {
-    const loadNotes = async () => {
-      try {
-        const modules = import.meta.glob('../data/learn/*.md', {
-          query: '?raw',
-          import: 'default',
-        });
-
-        const files: Record<string, string> = {};
-        for (const [path, loader] of Object.entries(modules)) {
-          const content = (await loader()) as string;
-          files[path] = content;
-        }
-
-        const parsed = parseLessons(files);
-        setCourses(parsed);
-        setLoading(false);
-      } catch (err) {
-        setError(String(err));
-        setLoading(false);
-      }
-    };
-
-    loadNotes();
-  }, []);
-
-  return { courses, loading, error };
+  return { courses, loading: false, error: null };
 }

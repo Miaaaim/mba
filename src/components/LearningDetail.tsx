@@ -1,6 +1,7 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CourseGroup, LessonMeta } from '../utils/parseLessons';
+import { loadLearnMarkdown } from '../utils/loadLearnMarkdown';
 import { LessonContent } from './LessonContent';
 import {
   ArrowLeft,
@@ -15,6 +16,61 @@ interface LearningDetailProps {
   courses: CourseGroup[];
 }
 
+function ContentLoading({ label }: { label?: string }) {
+  return (
+    <div className="flex items-center justify-center gap-2 text-gray-400 py-10">
+      <div className="w-4 h-4 border-2 border-gray-300 border-t-gray-500 rounded-full animate-spin" />
+      <span className="text-sm">{label || '加载内容中...'}</span>
+    </div>
+  );
+}
+
+function ContentError({ message }: { message: string }) {
+  return (
+    <div className="text-center py-8">
+      <p className="text-sm text-red-500">加载失败：{message}</p>
+    </div>
+  );
+}
+
+/** 按需加载单个 Markdown 文件 */
+function useLazyMarkdown(filename: string | null, enabled: boolean) {
+  const [content, setContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const loadedFilename = React.useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!enabled || !filename) return;
+    if (loadedFilename.current === filename) return;
+
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+
+    loadLearnMarkdown(filename)
+      .then((text) => {
+        if (!cancelled) {
+          loadedFilename.current = filename;
+          setContent(text);
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setError(String(err));
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [filename, enabled]);
+
+  return { content, loading, error };
+}
+
 // ─── 单课条目 ──────────────────────────────────────────────────
 
 const LessonItem: React.FC<{
@@ -24,7 +80,11 @@ const LessonItem: React.FC<{
   onToggle: () => void;
   onTabChange: (tab: 'note' | 'memoryMap') => void;
 }> = ({ lesson, isExpanded, activeTab, onToggle, onTabChange }) => {
-  const hasBoth = lesson.hasMemoryMap && lesson.memoryMapContent;
+  const showNote = isExpanded && (activeTab === 'note' || !lesson.hasMemoryMap);
+  const showMemoryMap = isExpanded && activeTab === 'memoryMap' && lesson.hasMemoryMap;
+
+  const note = useLazyMarkdown(lesson.notePath, showNote);
+  const memoryMap = useLazyMarkdown(lesson.memoryMapPath, showMemoryMap);
 
   return (
     <div className="border-2 border-[#E8E0D5] rounded-lg bg-white overflow-hidden">
@@ -62,7 +122,7 @@ const LessonItem: React.FC<{
       {isExpanded && (
         <div className="border-t-2 border-[#E8E0D5]">
           {/* Tab 切换（仅当同时有笔记和记忆图时显示） */}
-          {hasBoth && (
+          {lesson.hasMemoryMap && (
             <div className="flex border-b-2 border-[#E8E0D5] bg-[#FAF8F2]">
               <button
                 onClick={() => onTabChange('note')}
@@ -91,14 +151,26 @@ const LessonItem: React.FC<{
 
           {/* 内容区 */}
           <div className="p-4 md:p-6 max-h-[70vh] overflow-y-auto">
-            {(!hasBoth || activeTab === 'note') && (
-              <LessonContent content={lesson.noteContent} label="📝 课堂笔记" />
+            {showNote && (
+              <>
+                {note.loading && <ContentLoading label="加载笔记中..." />}
+                {note.error && <ContentError message={note.error} />}
+                {!note.loading && !note.error && note.content && (
+                  <LessonContent content={note.content} label="📝 课堂笔记" />
+                )}
+              </>
             )}
-            {hasBoth && activeTab === 'memoryMap' && lesson.memoryMapContent && (
-              <LessonContent
-                content={lesson.memoryMapContent}
-                label="🧠 知识记忆图"
-              />
+            {showMemoryMap && (
+              <>
+                {memoryMap.loading && <ContentLoading label="加载记忆图中..." />}
+                {memoryMap.error && <ContentError message={memoryMap.error} />}
+                {!memoryMap.loading && !memoryMap.error && memoryMap.content && (
+                  <LessonContent
+                    content={memoryMap.content}
+                    label="🧠 知识记忆图"
+                  />
+                )}
+              </>
             )}
           </div>
         </div>
@@ -132,7 +204,12 @@ const CoursePanel: React.FC<{
 }) => {
   const { course, lessons } = courseGroup;
   const totalMemoryMaps = lessons.filter((l) => l.hasMemoryMap).length;
-  const hasSummary = !!courseGroup.knowledgeSummaryContent;
+  const hasSummary = courseGroup.hasKnowledgeSummary;
+
+  const summary = useLazyMarkdown(
+    courseGroup.knowledgeSummaryPath,
+    isExpanded && showKnowledgeSummary && hasSummary
+  );
 
   return (
     <div className="border-3 border-black rounded-xl bg-white overflow-hidden shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
@@ -206,14 +283,13 @@ const CoursePanel: React.FC<{
               ))}
             </div>
           ) : (
-            courseGroup.knowledgeSummaryContent && (
-              <div className="p-4 md:p-6 max-h-[70vh] overflow-y-auto bg-white">
-                <LessonContent
-                  content={courseGroup.knowledgeSummaryContent}
-                  label="📋 知识汇总"
-                />
-              </div>
-            )
+            <div className="p-4 md:p-6 max-h-[70vh] overflow-y-auto bg-white">
+              {summary.loading && <ContentLoading label="加载知识汇总中..." />}
+              {summary.error && <ContentError message={summary.error} />}
+              {!summary.loading && !summary.error && summary.content && (
+                <LessonContent content={summary.content} label="📋 知识汇总" />
+              )}
+            </div>
           )}
         </div>
       )}
@@ -252,7 +328,7 @@ export const LearningDetail: React.FC<LearningDetailProps> = ({
   );
 
   const totalSummaries = useMemo(
-    () => courses.filter((c) => c.knowledgeSummaryContent).length,
+    () => courses.filter((c) => c.hasKnowledgeSummary).length,
     [courses]
   );
 

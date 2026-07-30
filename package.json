@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --port=3000 --host=0.0.0.0",
-    "build": "vite build",
-    "build:cloud": "npm install --include=optional --no-audit --no-fund && npm rebuild @tailwindcss/oxide esbuild && vite build",
+    "generate:learn-index": "tsx scripts/generate-learn-index.ts",
+    "dev": "npm run generate:learn-index && vite --port=3000 --host=0.0.0.0",
+    "build": "npm run generate:learn-index && vite build",
+    "build:cloud": "npm install --include=optional --no-audit --no-fund && npm rebuild @tailwindcss/oxide esbuild && npm run generate:learn-index && vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist server.js",
     "lint": "tsc --noEmit"
