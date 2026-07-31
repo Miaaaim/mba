@@ -119,7 +119,7 @@ export const Navigation: React.FC<NavigationProps> = ({ onScrollTo }) => {
 
           <button
             onClick={() => handleNavClick("learning")}
-            className={`${tabBaseClass} last:border-r-0 ${
+            className={`${tabBaseClass} last:border-r-0 hidden ${
               activeSection === "learning"
                 ? "bg-[#E2DEFF] text-black shadow-[inset_0_-3px_0_0_rgba(0,0,0,1)]"
                 : "text-gray-800 hover:bg-[#E2DEFF]"

@@ -71,7 +71,7 @@ export default function HomePage() {
         </div>
 
         {/* 学习板块：前置课程笔记 & 学习资料入口 */}
-        <div id="learning" className="w-full bg-white border-t-3 border-black py-8">
+        <div id="learning" className="w-full bg-white border-t-3 border-black py-8 hidden">
           <LearningSection />
         </div>
 
