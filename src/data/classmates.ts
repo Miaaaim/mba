@@ -108,6 +108,23 @@ export function generateClassmates(): Classmate[] {
       photoOffsetY: "20%"
     },
     {
+      id: "user-004",
+      name: "曾德权",
+      className: "周末4班",
+      hometown: "江西赣州",
+      currentCity: "浙江杭州",
+      contact: "18758066989",
+      hobbies: "跑步、篮球、徒步、旅行、阅读",
+      companyTitle: "优必选、产品总监",
+      experience: "具身智能机器人资深从业者",
+      canHelp: "新产品开发管理方法咨询、行业咨询",
+      futureExpectation: "保持热爱，以梦为马，共赴星海",
+      tagsText: "跑步小达人、创新、爱折腾",
+      MBTI: "",
+      photo: "contact-photos/user_004.jpg",
+      fallbackEmoji: "🤖"
+    },
+    {
       id: "user-005",
       name: "陈斌",
       className: "周末4班",
@@ -200,13 +217,13 @@ export function generateClassmates(): Classmate[] {
       currentCity: "杭州",
       contact: "18042037577",
       hobbies: "唱歌，桌游，德州，羽毛球，美食，养鱼，麻将",
-      companyTitle: "省机场集团下属航空物流公司国际 货站出港部组长",
+      companyTitle: "浙江省空港物流公司下属国际货站 出港部组长",
       experience: "咖啡师，桌游店老板",
-      canHelp: "国际航空物流/通用航空相关、高品质沉香收藏",
+      canHelp: "国际航空物流、通用航空相关/高品沉香收藏",
       futureExpectation: "和好玩的人一起做好玩的事",
-      tagsText: "ISTJ，向往社交但不善言辞，买单别跟我抢，学军校友滴滴",
+      tagsText: "ISTJ/不善言辞但向往社交/A钱超快",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_012.jpg",
       fallbackEmoji: "✈️"
     },
     {
@@ -295,6 +312,23 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "📖"
     },
     {
+      id: "user-010",
+      name: "姜昊",
+      className: "周末四班",
+      hometown: "安徽合肥",
+      currentCity: "浙江杭州",
+      contact: "13456951758",
+      hobbies: "跑步、阅读",
+      companyTitle: "两家初创公司技术负责人",
+      experience: "海康、微医，半年从零到千万营收的搭建者",
+      canHelp: "教育数字化",
+      futureExpectation: "用心学习，了解更多的行业知识",
+      tagsText: "慢热、处女座",
+      MBTI: "",
+      photo: "contact-photos/user_010.jpg",
+      fallbackEmoji: "💻"
+    },
+    {
       id: "user-019",
       name: "王家芷",
       className: "周末四班",
@@ -308,7 +342,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "保持成长与热爱，过好每一天",
       tagsText: "ENFP、水象",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_019.jpg",
       fallbackEmoji: "🎮"
     },
     {
@@ -373,11 +407,11 @@ export function generateClassmates(): Classmate[] {
       hobbies: "足球，五月天",
       companyTitle: "浦发德清支行行长",
       experience: "工行安吉支行、浦发安吉支行",
-      canHelp: "“金融＋科技产业生态圈”，投融资、收并购、跨境结算方案、办公家具原厂渠道",
+      canHelp: "金融＋科技产业生态圈，投融资、收并购、跨境结算方案、办公家具原厂渠道",
       futureExpectation: "生态扩圈，朋友扩表，知识扩列",
       tagsText: "金融科技生态圈建立者，思维天马",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_023.jpg",
       fallbackEmoji: "🏦"
     },
     {
@@ -411,7 +445,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "与本行业的技术人员有更深入的交流，以及不同行业之间的火花碰撞",
       tagsText: "极端两极分化的双子座",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_027.jpg",
       fallbackEmoji: "🧪"
     },
     {
@@ -443,9 +477,9 @@ export function generateClassmates(): Classmate[] {
       experience: "本科毕业后就一直在现单位工作",
       canHelp: "有想了解人事或者考公相关的一些政策的可以解答",
       futureExpectation: "不挂科，一起顺利毕业",
-      tagsText: "ISFP，一般不喜欢拍照，所以没有靓照😂",
+      tagsText: "ISFP",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_026.jpg",
       fallbackEmoji: "🏸"
     },
     {
@@ -497,7 +531,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "认识各行各业优秀人才，共同进步，顺利毕业。",
       tagsText: "ENFP偏I但话多",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_030.jpg",
       fallbackEmoji: "⚖️"
     },
     {
@@ -523,7 +557,7 @@ export function generateClassmates(): Classmate[] {
       className: "周末四班",
       hometown: "辽宁省阜新市",
       currentCity: "浙江省杭州市",
-      contact: "1514259469",
+      contact: "15142594699",
       hobbies: "绘画、动漫",
       companyTitle: "启慧管理咨询、创业者",
       experience: "12年人资+2年管理咨询",
@@ -531,7 +565,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "破界、体系、精进",
       tagsText: "INTP、天蝎、无法定义",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_032.jpg",
       fallbackEmoji: "🎨"
     },
     {
@@ -684,7 +718,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "结识更多伙伴、学习AI、学习管理",
       tagsText: "",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_041.png",
       fallbackEmoji: "🎮"
     },
     {
@@ -694,14 +728,14 @@ export function generateClassmates(): Classmate[] {
       hometown: "浙江杭州",
       currentCity: "浙江杭州",
       contact: "18806518160",
-      hobbies: "剧本杀骑行桌游",
+      hobbies: "剧本杀 骑行 桌游",
       companyTitle: "浙商保险技术",
       experience: "IDC",
       canHelp: "酒类、保险类购买折扣",
       futureExpectation: "和优秀的人共同学习成长、顺利毕业",
-      tagsText: "ENFP/INFP技术转行中雄关漫道真如铁，而今迈步从头越。",
+      tagsText: "ENFP/INFP 技术转行中 雄关漫道真如铁，而今迈步从头越。",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_042.jpg",
       fallbackEmoji: "🛡️"
     },
     {
@@ -716,7 +750,7 @@ export function generateClassmates(): Classmate[] {
       experience: "Midea生活电器直播负责人",
       canHelp: "电商、营销相关都可深入探讨",
       futureExpectation: "和同学们优势互补，合伙共创",
-      tagsText: "年龄与心态完全不符的“老年人”",
+      tagsText: "年龄与心态完全不符的老年人",
       MBTI: "",
       photo: "contact-photos/user_044.png",
       fallbackEmoji: "🎣"
@@ -746,13 +780,13 @@ export function generateClassmates(): Classmate[] {
       currentCity: "浙江杭州",
       contact: "15905778889",
       hobbies: "网球，健身",
-      companyTitle: "杭州移动政企解决方案经理",
+      companyTitle: "萧山移动 政企解决方案经理",
       experience: "毕业即入职移动",
-      canHelp: "",
-      futureExpectation: "",
-      tagsText: "",
+      canHelp: "可为有企业数智化、信息化建设需求的伙伴提供专业方案与对接服务",
+      futureExpectation: "与大家互帮互助，共同成长",
+      tagsText: "杭州",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_046.jpg",
       fallbackEmoji: "📡"
     },
     {
@@ -822,7 +856,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "参与AI在行业中的实际落地项目",
       tagsText: "海归/技术不宅/AI浓度五个9/猫托车骑手",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_050.jpg",
       fallbackEmoji: "☁️"
     },
     {
@@ -873,7 +907,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "对接更大平台 施展更大能量",
       tagsText: "公益组织服务者 / 持续减肥党 / 40+ 宝妈",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_054.png",
       fallbackEmoji: "🎤"
     },
     {
@@ -944,6 +978,40 @@ export function generateClassmates(): Classmate[] {
       MBTI: "",
       photo: "contact-photos/user_058.jpg",
       fallbackEmoji: "🏃"
+    },
+    {
+      id: "user-059",
+      name: "张作为",
+      className: "周末四班",
+      hometown: "辽宁",
+      currentCity: "杭州西湖区",
+      contact: "17816104819",
+      hobbies: "喝茶，交流，打羽毛球",
+      companyTitle: "杭州为世生物科技有限公司",
+      experience: "10年半导体行业从业经历，8年创业经历，创办两家生物检测公司",
+      canHelp: "自动化检测设备，IVD行业资源，公安系统资源",
+      futureExpectation: "学习，交友～",
+      tagsText: "连续创业人，智能设备制造～",
+      MBTI: "",
+      photo: "contact-photos/user_059.jpg",
+      fallbackEmoji: "🔬"
+    },
+    {
+      id: "user-060",
+      name: "赵子钰",
+      className: "周末四班",
+      hometown: "湖南",
+      currentCity: "上海",
+      contact: "19100798736",
+      hobbies: "旅游",
+      companyTitle: "基金公司固收研究员及基助",
+      experience: "",
+      canHelp: "固收市场解读、分享债券交易实操经验以及金融市场咨询。",
+      futureExpectation: "期待能够认识各行各业优秀伙伴，跨界交流学习",
+      tagsText: "",
+      MBTI: "",
+      photo: "",
+      fallbackEmoji: "📊"
     },
     {
       id: "user-061",
