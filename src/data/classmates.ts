@@ -278,7 +278,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🦁"
     },
     {
-      id: "user-017",
+      id: "user-042",
       name: "王倩悦",
       className: "周末四班",
       hometown: "浙江余姚",
@@ -291,7 +291,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "",
       tagsText: "",
       MBTI: "",
-      photo: "contact-photos/user_017.jpeg",
+      photo: "contact-photos/user_042.jpeg",
       fallbackEmoji: "🌷"
     },
     {
@@ -312,7 +312,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "📖"
     },
     {
-      id: "user-010",
+      id: "user-019",
       name: "姜昊",
       className: "周末四班",
       hometown: "安徽合肥",
@@ -325,11 +325,11 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "用心学习，了解更多的行业知识",
       tagsText: "慢热、处女座",
       MBTI: "",
-      photo: "contact-photos/user_010.jpg",
+      photo: "contact-photos/user_019.jpg",
       fallbackEmoji: "💻"
     },
     {
-      id: "user-019",
+      id: "user-041",
       name: "王家芷",
       className: "周末四班",
       hometown: "浙江台州",
@@ -342,7 +342,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "保持成长与热爱，过好每一天",
       tagsText: "ENFP、水象",
       MBTI: "",
-      photo: "contact-photos/user_019.jpg",
+      photo: "contact-photos/user_041.jpg",
       fallbackEmoji: "🎮"
     },
     {
@@ -398,7 +398,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🦋"
     },
     {
-      id: "user-023",
+      id: "user-032",
       name: "石汉章",
       className: "周末四班",
       hometown: "浙江安吉",
@@ -411,7 +411,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "生态扩圈，朋友扩表，知识扩列",
       tagsText: "金融科技生态圈建立者，思维天马",
       MBTI: "",
-      photo: "contact-photos/user_023.jpg",
+      photo: "contact-photos/user_032.jpg",
       fallbackEmoji: "🏦"
     },
     {
@@ -432,7 +432,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🍵"
     },
     {
-      id: "user-027",
+      id: "user-046",
       name: "许瑞婷",
       className: "周末4班",
       hometown: "山西临汾",
@@ -445,7 +445,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "与本行业的技术人员有更深入的交流，以及不同行业之间的火花碰撞",
       tagsText: "极端两极分化的双子座",
       MBTI: "",
-      photo: "contact-photos/user_027.jpg",
+      photo: "contact-photos/user_046.jpg",
       fallbackEmoji: "🧪"
     },
     {
@@ -552,7 +552,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🍚"
     },
     {
-      id: "user-032",
+      id: "user-006",
       name: "陈玲",
       className: "周末四班",
       hometown: "辽宁省阜新市",
@@ -565,7 +565,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "破界、体系、精进",
       tagsText: "INTP、天蝎、无法定义",
       MBTI: "",
-      photo: "contact-photos/user_032.jpg",
+      photo: "contact-photos/user_006.jpg",
       fallbackEmoji: "🎨"
     },
     {
@@ -705,7 +705,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🐏"
     },
     {
-      id: "user-041",
+      id: "user-027",
       name: "鲁杭辰",
       className: "周末四班",
       hometown: "浙江杭州",
@@ -718,11 +718,11 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "结识更多伙伴、学习AI、学习管理",
       tagsText: "",
       MBTI: "",
-      photo: "contact-photos/user_041.png",
+      photo: "contact-photos/user_027.png",
       fallbackEmoji: "🎮"
     },
     {
-      id: "user-042",
+      id: "user-017",
       name: "黄鑫",
       className: "周末四班",
       hometown: "浙江杭州",
@@ -735,7 +735,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "和优秀的人共同学习成长、顺利毕业",
       tagsText: "ENFP/INFP 技术转行中 雄关漫道真如铁，而今迈步从头越。",
       MBTI: "",
-      photo: "contact-photos/user_042.jpg",
+      photo: "contact-photos/user_017.jpg",
       fallbackEmoji: "🛡️"
     },
     {
@@ -773,7 +773,7 @@ export function generateClassmates(): Classmate[] {
       fallbackEmoji: "🎥"
     },
     {
-      id: "user-046",
+      id: "user-051",
       name: "叶征源",
       className: "周末4班",
       hometown: "浙江温州",
@@ -786,7 +786,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "与大家互帮互助，共同成长",
       tagsText: "杭州",
       MBTI: "",
-      photo: "contact-photos/user_046.jpg",
+      photo: "contact-photos/user_051.jpg",
       fallbackEmoji: "📡"
     },
     {
@@ -843,7 +843,7 @@ export function generateClassmates(): Classmate[] {
       photoOffsetX: "40%"
     },
     {
-      id: "user-050",
+      id: "user-043",
       name: "王腾䶮",
       className: "周末4班",
       hometown: "浙江杭州",
@@ -856,7 +856,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "参与AI在行业中的实际落地项目",
       tagsText: "海归/技术不宅/AI浓度五个9/猫托车骑手",
       MBTI: "",
-      photo: "contact-photos/user_050.jpg",
+      photo: "contact-photos/user_043.jpg",
       fallbackEmoji: "☁️"
     },
     {
