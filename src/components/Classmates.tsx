@@ -891,62 +891,44 @@ export const Classmates: React.FC = () => {
 
         return (
         <div
-          className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setSelectedClassmate(null)}
         >
-          {/* 上一位同学按钮 */}
-          {hasPrev && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedClassmate(filteredClassmates[currentIndex - 1]);
-              }}
-              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
-              aria-label="上一位同学"
-            >
-              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-black" />
-            </button>
-          )}
+          <div className="flex items-center gap-1 md:gap-3 w-full max-w-[95vw]">
+            {/* 上一位同学按钮 */}
+            {hasPrev ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedClassmate(filteredClassmates[currentIndex - 1]);
+                }}
+                className="shrink-0 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
+                aria-label="上一位同学"
+              >
+                <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-black" />
+              </button>
+            ) : (
+              <div className="shrink-0 w-9 md:w-12" />
+            )}
 
-          {/* 下一位同学按钮 */}
-          {hasNext && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                setSelectedClassmate(filteredClassmates[currentIndex + 1]);
-              }}
-              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
-              aria-label="下一位同学"
+            <div
+              className="relative w-full max-w-4xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[92vh] overflow-y-auto p-6 md:p-10 animate-in fade-in zoom-in-95 duration-200"
+              onClick={(e) => e.stopPropagation()}
             >
-              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-black" />
-            </button>
-          )}
-
-          <div
-            className="relative w-full max-w-3xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto flex flex-col md:flex-row p-6 md:p-8 gap-6 animate-in fade-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
             
             {/* Close button on top right */}
             <button
               onClick={() => setSelectedClassmate(null)}
-              className="absolute top-4 right-4 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-1.5 transition-transform hover:scale-110 shadow-[2px_2px_0_0_#000] cursor-pointer"
+              className="absolute top-4 right-4 z-10 bg-white border-2 border-black hover:bg-red-100 rounded-full p-2 transition-transform hover:scale-110 shadow-[2px_2px_0_0_#000] cursor-pointer"
             >
               <X className="w-5 h-5 text-black" />
             </button>
 
-            {/* Left Column: Visual Avatar & Primary Identification */}
-            <div className="flex flex-col items-center shrink-0 w-full md:w-64 text-center border-b md:border-b-0 md:border-r border-dashed border-gray-400 pb-5 md:pb-0 md:pr-6">
+            {/* ── Hero Section: Photo + Identity ── */}
+            <div className="flex flex-col md:flex-row items-center md:items-start gap-6 md:gap-8 mb-8 pb-6 border-b-2 border-dashed border-gray-400">
               
-              {/* Sticker Indicator inside popup */}
-              {selectedClassmate.MBTI && selectedClassmate.MBTI.trim() !== "" && (
-                <div className="bg-black text-[#A1FC3A] border border-black rounded px-2.5 py-1.5 font-mono text-xs font-black uppercase tracking-widest leading-none rotate-2 mb-4">
-                  {selectedClassmate.MBTI} 型人格
-                </div>
-              )}
-
-              {/* Main Photo avatar */}
-              <div className="w-40 h-40 md:w-[13rem] md:h-[13rem] bg-white border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)] relative overflow-hidden mb-4">
+              {/* Large Photo */}
+              <div className="w-36 h-36 md:w-48 md:h-48 bg-white border-3 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0_0_rgba(0,0,0,1)] relative overflow-hidden shrink-0">
                 {selectedClassmate.photo ? (
                   <img
                     src={getPhotoUrl(selectedClassmate.photo)}
@@ -957,164 +939,171 @@ export const Classmates: React.FC = () => {
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       const fallbackEl = e.currentTarget.nextElementSibling as HTMLElement;
-                      if (fallbackEl) {
-                        fallbackEl.style.display = "flex";
-                      }
+                      if (fallbackEl) fallbackEl.style.display = "flex";
                     }}
                   />
                 ) : null}
                 <span
-                  className="text-5xl filter drop-shadow-[2px_2px_0px_#000]"
+                  className="text-6xl filter drop-shadow-[2px_2px_0px_#000]"
                   style={{ display: selectedClassmate.photo ? "none" : "flex" }}
                 >
                   {selectedClassmate.fallbackEmoji}
                 </span>
               </div>
 
-              <h3 className="font-sans font-black text-2xl text-gray-900 leading-tight">
-                {selectedClassmate.name}
-              </h3>
+              {/* Identity Info */}
+              <div className="flex-1 text-center md:text-left">
+                {/* MBTI Badge */}
+                {selectedClassmate.MBTI && selectedClassmate.MBTI.trim() !== "" && (
+                  <span className="inline-block bg-black text-[#A1FC3A] border-2 border-black rounded-lg px-3 py-1.5 font-mono text-sm font-black uppercase tracking-widest leading-none rotate-[-1deg] mb-3">
+                    {selectedClassmate.MBTI} 型人格
+                  </span>
+                )}
 
-              {selectedClassmate.companyTitle && selectedClassmate.companyTitle.trim() !== "" && (
-                <p className="font-sans text-xs text-gray-600 font-bold mt-1 uppercase max-w-[170px]">
-                  {selectedClassmate.companyTitle}
-                </p>
-              )}
+                <h3 className="font-sans font-black text-3xl md:text-4xl text-gray-900 leading-tight">
+                  {selectedClassmate.name}
+                </h3>
 
-              {(selectedClassmate.currentCity || selectedClassmate.hometown /* || selectedClassmate.className */) && (
-                <div className="mt-4 w-full bg-white border-2 border-black rounded-xl p-2.5 text-left space-y-1 shadow-[2.5px_2.5px_0_0_#000]">
+                {selectedClassmate.companyTitle && selectedClassmate.companyTitle.trim() !== "" && (
+                  <p className="font-sans text-sm md:text-base text-gray-600 font-bold mt-1.5">
+                    🏢 {selectedClassmate.companyTitle}
+                  </p>
+                )}
+
+                {/* Location & Hometown pills */}
+                <div className="flex flex-wrap justify-center md:justify-start gap-2 mt-3">
                   {selectedClassmate.currentCity && selectedClassmate.currentCity.trim() !== "" && (
-                    <div className="flex items-center gap-1.5 font-sans text-xs md:text-sm text-gray-800 font-semibold">
-                      <MapPin className="w-3.5 h-3.5 text-emerald-600 font-bold" />
-                      <span>现居：{selectedClassmate.currentCity}</span>
-                    </div>
+                    <span className="inline-flex items-center gap-1 bg-white border-2 border-black rounded-full px-3 py-1 font-sans text-xs md:text-sm font-bold shadow-[2px_2px_0_0_#000]">
+                      <MapPin className="w-3.5 h-3.5 text-emerald-600" />
+                      现居 {selectedClassmate.currentCity}
+                    </span>
                   )}
                   {selectedClassmate.hometown && selectedClassmate.hometown.trim() !== "" && (
-                    <div className="flex items-center gap-1.5 font-sans text-xs md:text-sm text-gray-800 font-semibold">
+                    <span className="inline-flex items-center gap-1 bg-white border-2 border-black rounded-full px-3 py-1 font-sans text-xs md:text-sm font-bold shadow-[2px_2px_0_0_#000]">
                       <Compass className="w-3.5 h-3.5 text-sky-500" />
-                      <span>家乡：{selectedClassmate.hometown}</span>
-                    </div>
+                      家乡 {selectedClassmate.hometown}
+                    </span>
                   )}
-                  {/* selectedClassmate.className && selectedClassmate.className.trim() !== "" && (
-                    <div className="flex items-center gap-1.5 font-sans text-xs md:text-sm text-gray-800 font-semibold">
-                      <Award className="w-3.5 h-3.5 text-pink-500" />
-                      <span>班级：{selectedClassmate.className}</span>
-                    </div>
-                  ) */}
+                </div>
+
+                {/* Tags */}
+                {selectedClassmate.tagsText && selectedClassmate.tagsText.trim() !== "" && (
+                  <div className="mt-3 font-mono text-xs md:text-sm text-[#5B21B6] font-bold tracking-tight bg-[#E2DEFF] border-2 border-dashed border-[#5B21B6]/30 px-3 py-1.5 rounded-lg inline-block">
+                    {selectedClassmate.tagsText}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* ── Info Cards Grid ── */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 mb-6">
+              
+              {/* Experience */}
+              {selectedClassmate.experience && selectedClassmate.experience.trim() !== "" && (
+                <div className="bg-white border-2 border-black rounded-2xl p-4 md:p-5 shadow-[3px_3px_0_0_#000] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] transition-all">
+                  <label className="flex items-center gap-2 font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-2">
+                    <span className="bg-black rounded-lg p-1"><Briefcase className="w-3.5 h-3.5 text-[#A1FC3A]" /></span>
+                    经历简介
+                  </label>
+                  <p className="font-sans text-sm md:text-base text-gray-800 font-semibold leading-relaxed">
+                    {selectedClassmate.experience}
+                  </p>
                 </div>
               )}
 
-              {/* Tag text list */}
-              {selectedClassmate.tagsText && selectedClassmate.tagsText.trim() !== "" && (
-                <div className="mt-4 font-mono text-xs md:text-sm text-[#5B21B6] font-bold tracking-tight bg-[#E2DEFF] border-2 border-dashed border-[#5B21B6]/30 px-2.5 py-1.5 rounded-lg w-full">
-                  {selectedClassmate.tagsText}
+              {/* Can Help */}
+              {selectedClassmate.canHelp && selectedClassmate.canHelp.trim() !== "" && (
+                <div className="bg-[#D2F4E2] border-2 border-black rounded-2xl p-4 md:p-5 shadow-[3px_3px_0_0_#000] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] transition-all">
+                  <label className="flex items-center gap-2 font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-2">
+                    <span className="bg-black rounded-lg p-1"><HelpCircle className="w-3.5 h-3.5 text-[#FFF176]" /></span>
+                    我可提供的支持
+                  </label>
+                  <p className="font-sans text-sm md:text-base text-gray-800 font-extrabold leading-relaxed">
+                    {selectedClassmate.canHelp}
+                  </p>
+                </div>
+              )}
+
+              {/* Future Expectations */}
+              {selectedClassmate.futureExpectation && selectedClassmate.futureExpectation.trim() !== "" && (
+                <div className="bg-[#FFF5D2] border-2 border-black rounded-2xl p-4 md:p-5 shadow-[3px_3px_0_0_#000] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] transition-all">
+                  <label className="flex items-center gap-2 font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-2">
+                    <span className="bg-black rounded-lg p-1"><Smile className="w-3.5 h-3.5 text-[#FFE082]" /></span>
+                    期待对接/搭子方向
+                  </label>
+                  <p className="font-sans text-sm md:text-base text-gray-800 font-bold leading-relaxed">
+                    {selectedClassmate.futureExpectation}
+                  </p>
+                </div>
+              )}
+
+              {/* Hobbies */}
+              {selectedClassmate.hobbies && selectedClassmate.hobbies.trim() !== "" && (
+                <div className="bg-[#FFE2F2] border-2 border-black rounded-2xl p-4 md:p-5 shadow-[3px_3px_0_0_#000] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_0_#000] transition-all">
+                  <label className="flex items-center gap-2 font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-2">
+                    <span className="bg-black rounded-lg p-1"><Heart className="w-3.5 h-3.5 text-[#FF80AB]" /></span>
+                    兴趣特长
+                  </label>
+                  <p className="font-sans text-sm md:text-base text-gray-700 font-bold leading-relaxed">
+                    {selectedClassmate.hobbies}
+                  </p>
                 </div>
               )}
 
             </div>
 
-            {/* Right Column: Key Details specified by user request */}
-            <div className="flex-1 space-y-4">
-              
-              {/* Header Title inside pop contents */}
-              <div className="pb-2 border-b border-gray-400/30">
-                <span className="font-mono text-xs text-gray-400 font-black block uppercase">
-                  Classmate Directory Detail
-                </span>
-                <span className="font-sans text-xl font-bold text-black flex items-center gap-1.5 mt-0.5">
-                  💡 深度共创合作档案
-                </span>
-              </div>
-
-              {/* Experience Info (经历简介) */}
-              {selectedClassmate.experience && selectedClassmate.experience.trim() !== "" && (
-                <div>
-                  <label className="block font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Briefcase className="w-3.5 h-3.5 text-black" />
-                    <span>经历简介 (Experience):</span>
-                  </label>
-                  <div className="bg-white border-2 border-black rounded-xl p-3 font-sans text-sm md:text-sm text-gray-800 font-semibold leading-relaxed shadow-[2px_2px_0_0_#000]">
-                    {selectedClassmate.experience}
-                  </div>
-                </div>
-              )}
-
-              {/* Can Help Info (能提供什么帮助) */}
-              {selectedClassmate.canHelp && selectedClassmate.canHelp.trim() !== "" && (
-                <div>
-                  <label className="block font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <HelpCircle className="w-3.5 h-3.5 text-black" />
-                    <span>我可提供的支持 (Can Help):</span>
-                  </label>
-                  <div className="bg-[#D2F4E2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-sm text-gray-800 font-extrabold leading-relaxed shadow-[2px_2px_0_0_#000]">
-                    {selectedClassmate.canHelp}
-                  </div>
-                </div>
-              )}
-
-              {/* Future Expectation Info (未来期待) */}
-              {selectedClassmate.futureExpectation && selectedClassmate.futureExpectation.trim() !== "" && (
-                <div>
-                  <label className="block font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Smile className="w-3.5 h-3.5 text-black" />
-                    <span>期待对接/搭子方向 (Expectations):</span>
-                  </label>
-                  <div className="bg-[#FFF5D2] border-2 border-black rounded-xl p-3.5 font-sans text-sm md:text-sm text-gray-800 font-bold leading-relaxed shadow-[2px_2px_0_0_#000]">
-                    {selectedClassmate.futureExpectation}
-                  </div>
-                </div>
-              )}
-
-              {/* Hobbies (兴趣爱好) */}
-              {selectedClassmate.hobbies && selectedClassmate.hobbies.trim() !== "" && (
-                <div>
-                  <label className="block font-sans font-black text-sm text-gray-800 uppercase tracking-wider mb-1 flex items-center gap-1.5">
-                    <Heart className="w-3.5 h-3.5 text-pink-500" />
-                    <span>兴趣特长 (Hobbies):</span>
-                  </label>
-                  <div className="bg-[#FFE2F2] border-2 border-black rounded-xl p-3 font-sans text-sm md:text-sm text-gray-700 font-bold leading-relaxed shadow-[1.5px_1.5px_0_0_#000]">
-                    {selectedClassmate.hobbies}
-                  </div>
-                </div>
-              )}
-
-              {/* Contact with Copyable success triggers */}
-              {selectedClassmate.contact && selectedClassmate.contact.trim() !== "" && (
-                <div className="pt-2">
-                  <button
-                    onClick={() => handleCopyContact(selectedClassmate.id, selectedClassmate.contact)}
-                    className={`w-full border-2 border-black rounded-2xl py-3.5 px-4 font-sans font-black text-sm uppercase flex items-center justify-between transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0_0_rgba(0,0,0,1)] cursor-pointer ${
+            {/* ── Contact Button ── */}
+            {selectedClassmate.contact && selectedClassmate.contact.trim() !== "" && (
+              <div>
+                <button
+                  onClick={() => handleCopyContact(selectedClassmate.id, selectedClassmate.contact)}
+                  className={`w-full border-2 border-black rounded-2xl py-4 px-5 font-sans font-black text-sm md:text-base uppercase flex items-center justify-between transition-all shadow-[4px_4px_0_0_rgba(0,0,0,1)] active:translate-x-[1px] active:translate-y-[1px] active:shadow-[2px_2px_0_0_rgba(0,0,0,1)] cursor-pointer ${
+                    copiedId === selectedClassmate.id
+                      ? "bg-[#A1FC3A] text-black hover:bg-[#8ee031]"
+                      : "bg-black text-[#A1FC3A] hover:bg-[#1E1E1E] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)]"
+                  }`}
+                >
+                  <span className="flex items-center gap-2">
+                    {copiedId === selectedClassmate.id ? (
+                      <Check className="w-5 h-5 text-emerald-800 animate-bounce" />
+                    ) : (
+                      <Copy className="w-5 h-5 text-[#A1FC3A]" />
+                    )}
+                    <span>
+                      {copiedId === selectedClassmate.id ? "钉入剪贴板成功！" : `一键复制联系微信 (${selectedClassmate.contact})`}
+                    </span>
+                  </span>
+                  
+                  <span
+                    className={`border border-black rounded-md px-3 py-1 text-xs font-mono font-black leading-none select-none ${
                       copiedId === selectedClassmate.id
-                        ? "bg-[#A1FC3A] text-black hover:bg-[#8ee031]"
-                        : "bg-black text-[#A1FC3A] hover:bg-[#1E1E1E] hover:-translate-y-0.5 hover:shadow-[6px_6px_0_0_rgba(0,0,0,1)]"
+                        ? "bg-black text-[#A1FC3A]"
+                        : "bg-[#A1FC3A] text-black"
                     }`}
                   >
-                    <span className="flex items-center gap-1.5">
-                      {copiedId === selectedClassmate.id ? (
-                        <Check className="w-4 h-4 text-emerald-800 animate-bounce" />
-                      ) : (
-                        <Copy className="w-4 h-4 text-[#A1FC3A]" />
-                      )}
-                      <span>
-                        {copiedId === selectedClassmate.id ? "钉入剪贴板成功！" : `一键复制联系微信 (${selectedClassmate.contact})`}
-                      </span>
-                    </span>
-                    
-                    <span
-                      className={`border border-black rounded-md px-2 py-0.5 text-xs font-mono font-black leading-none select-none ${
-                        copiedId === selectedClassmate.id
-                          ? "bg-black text-[#A1FC3A]"
-                          : "bg-[#A1FC3A] text-black"
-                      }`}
-                    >
-                      {copiedId === selectedClassmate.id ? "COPIED" : "COPY"}
-                    </span>
-                  </button>
-                </div>
-              )}
+                    {copiedId === selectedClassmate.id ? "COPIED" : "COPY"}
+                  </span>
+                </button>
+              </div>
+            )}
 
-            </div>
+          </div>
 
+            {/* 下一位同学按钮 */}
+            {hasNext ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedClassmate(filteredClassmates[currentIndex + 1]);
+                }}
+                className="shrink-0 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
+                aria-label="下一位同学"
+              >
+                <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-black" />
+              </button>
+            ) : (
+              <div className="shrink-0 w-9 md:w-12" />
+            )}
           </div>
         </div>
         );
