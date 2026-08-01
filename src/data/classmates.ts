@@ -1099,7 +1099,14 @@ export function generateClassmates(): Classmate[] {
     return trimmedCity;
   }
 
-  return rawList.map((item, index) => {
+  // Sort by ID numerically (user-001, user-002, ...)
+  const sortedList = [...rawList].sort((a, b) => {
+    const numA = parseInt(a.id.replace("user-", ""), 10);
+    const numB = parseInt(b.id.replace("user-", ""), 10);
+    return numA - numB;
+  });
+
+  return sortedList.map((item, index) => {
     let city = item.currentCity ? normalizeCurrentCity(item.currentCity) : "";
 
     let home = item.hometown ? item.hometown.trim() : "";
