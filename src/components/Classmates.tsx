@@ -4,7 +4,7 @@ import { HandwrittenDoodle } from "./HandwrittenDoodle";
 import { 
   Search, X, Copy, MapPin, Briefcase, Heart, 
   Smile, Compass, HelpCircle, Check, Award, ArrowUpRight,
-  LayoutGrid, List, ArrowRight, ChevronDown, BarChart3, Brain, Zap
+  LayoutGrid, List, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, BarChart3, Brain, Zap
 } from "lucide-react";
 
 const MBTI_REGEX = /INTJ|INTP|ENTJ|ENTP|INFJ|INFP|ENFJ|ENFP|ISTJ|ISFJ|ESTJ|ESFJ|ISTP|ISFP|ESTP|ESFP/g;
@@ -884,13 +884,46 @@ export const Classmates: React.FC = () => {
       )}
 
       {/* --- CLASSMATE CO-CREATION MODAL POPUP --- */}
-      {selectedClassmate && (
+      {selectedClassmate && (() => {
+        const currentIndex = filteredClassmates.findIndex(c => c.id === selectedClassmate.id);
+        const hasPrev = currentIndex > 0;
+        const hasNext = currentIndex < filteredClassmates.length - 1;
+
+        return (
         <div
           className="fixed inset-0 z-50 overflow-y-auto bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
           onClick={() => setSelectedClassmate(null)}
         >
+          {/* 上一位同学按钮 */}
+          {hasPrev && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedClassmate(filteredClassmates[currentIndex - 1]);
+              }}
+              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
+              aria-label="上一位同学"
+            >
+              <ChevronLeft className="w-5 h-5 md:w-6 md:h-6 text-black" />
+            </button>
+          )}
+
+          {/* 下一位同学按钮 */}
+          {hasNext && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setSelectedClassmate(filteredClassmates[currentIndex + 1]);
+              }}
+              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-10 bg-white border-2 border-black hover:bg-yellow-100 rounded-full p-2 md:p-3 transition-transform hover:scale-110 shadow-[3px_3px_0_0_#000] active:translate-x-0.5 active:translate-y-0.5 active:shadow-[1px_1px_0_0_#000] cursor-pointer"
+              aria-label="下一位同学"
+            >
+              <ChevronRight className="w-5 h-5 md:w-6 md:h-6 text-black" />
+            </button>
+          )}
+
           <div
-            className="relative w-full max-w-2xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto flex flex-col md:flex-row p-6 md:p-8 gap-6 animate-in fade-in zoom-in-95 duration-200"
+            className="relative w-full max-w-3xl bg-[#FCFBF4] border-3 border-black rounded-3xl shadow-[8px_8px_0_0_rgba(0,0,0,1)] max-h-[90vh] overflow-y-auto flex flex-col md:flex-row p-6 md:p-8 gap-6 animate-in fade-in zoom-in-95 duration-200"
             onClick={(e) => e.stopPropagation()}
           >
             
@@ -903,7 +936,7 @@ export const Classmates: React.FC = () => {
             </button>
 
             {/* Left Column: Visual Avatar & Primary Identification */}
-            <div className="flex flex-col items-center shrink-0 w-full md:w-56 text-center border-b md:border-b-0 md:border-r border-dashed border-gray-400 pb-5 md:pb-0 md:pr-6">
+            <div className="flex flex-col items-center shrink-0 w-full md:w-64 text-center border-b md:border-b-0 md:border-r border-dashed border-gray-400 pb-5 md:pb-0 md:pr-6">
               
               {/* Sticker Indicator inside popup */}
               {selectedClassmate.MBTI && selectedClassmate.MBTI.trim() !== "" && (
@@ -1084,7 +1117,8 @@ export const Classmates: React.FC = () => {
 
           </div>
         </div>
-      )}
+        );
+      })()}
 
       {/* 家乡分布弹窗 */}
       {showHometownModal && (
