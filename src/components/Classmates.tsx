@@ -1,4 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { generateClassmates, Classmate, MBTI_TYPES } from "../data/classmates";
 import { HandwrittenDoodle } from "./HandwrittenDoodle";
 import { 
@@ -889,12 +890,13 @@ export const Classmates: React.FC = () => {
         const hasPrev = currentIndex > 0;
         const hasNext = currentIndex < filteredClassmates.length - 1;
 
-        return (
+        return createPortal(
         <div
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4"
+          className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm overflow-y-auto"
           onClick={() => setSelectedClassmate(null)}
         >
-          <div className="flex items-center gap-1 md:gap-3 w-full max-w-[95vw]">
+          <div className="flex min-h-full items-center justify-center p-4">
+          <div className="flex items-center justify-center gap-1 md:gap-3 w-full max-w-[95vw]">
             {/* 上一位同学按钮 */}
             {hasPrev ? (
               <button
@@ -1105,7 +1107,9 @@ export const Classmates: React.FC = () => {
               <div className="shrink-0 w-9 md:w-12" />
             )}
           </div>
-        </div>
+          </div>
+        </div>,
+        document.body
         );
       })()}
 
