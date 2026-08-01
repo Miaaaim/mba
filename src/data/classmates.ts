@@ -291,7 +291,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "",
       tagsText: "",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_017.jpeg",
       fallbackEmoji: "🌷"
     },
     {
@@ -1010,7 +1010,7 @@ export function generateClassmates(): Classmate[] {
       futureExpectation: "期待能够认识各行各业优秀伙伴，跨界交流学习",
       tagsText: "",
       MBTI: "",
-      photo: "",
+      photo: "contact-photos/user_060.jpeg",
       fallbackEmoji: "📊"
     },
     {
